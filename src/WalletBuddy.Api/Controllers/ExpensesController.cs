@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WalletBuddy.Application.Services.Expenses;
 using WalletBuddy.Communication.Requests.Expenses;
+using WalletBuddy.Communication.Responses.Expenses;
 
 namespace WalletBuddy.Api.Controllers;
 
@@ -8,9 +10,12 @@ namespace WalletBuddy.Api.Controllers;
 public class ExpensesController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseExpenseCreatedJson), StatusCodes.Status201Created)]
     public IActionResult Create([FromBody] RequestExpenseCreateJson request)
-    { 
-        return Created();
+    {
+        var service = new CreateExpense();
+        var response = service.Execute(request);        
+
+        return Created(string.Empty, response);
     }
 }
