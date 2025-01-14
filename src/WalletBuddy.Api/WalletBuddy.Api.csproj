@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WalletBuddy.Application\WalletBuddy.Application.csproj" />
     <ProjectReference Include="..\WalletBuddy.Communication\WalletBuddy.Communication.csproj" />
     <ProjectReference Include="..\WalletBuddy.Exception\WalletBuddy.Exception.csproj" />
