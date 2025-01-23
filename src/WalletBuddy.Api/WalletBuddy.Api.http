@@ -1,6 +1,6 @@
 @WalletBuddy.Api_HostAddress = http://localhost:5058
 
-GET {{WalletBuddy.Api_HostAddress}}/weatherforecast/
+GET {{WalletBuddy.Api_HostAddress}}/walletbuddy/
 Accept: application/json
 
 ###

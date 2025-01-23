@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WalletBuddy.Communication\WalletBuddy.Communication.csproj" />
     <ProjectReference Include="..\WalletBuddy.Domain\WalletBuddy.Domain.csproj" />
     <ProjectReference Include="..\WalletBuddy.Exception\WalletBuddy.Exception.csproj" />
