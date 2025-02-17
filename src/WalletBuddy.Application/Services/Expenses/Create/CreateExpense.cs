@@ -1,5 +1,6 @@
 ﻿using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Communication.Responses.Expenses;
+using WalletBuddy.Exception.Exception;
 
 namespace WalletBuddy.Application.Services.Expenses.Create;
 public class CreateExpense
@@ -21,7 +22,7 @@ public class CreateExpense
         {
             var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
 
-            throw new ArgumentException();
+            throw new ErrorOnValidationException(errorMessages);
         }        
     }
 }
