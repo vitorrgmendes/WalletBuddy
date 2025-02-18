@@ -1,5 +1,4 @@
 ﻿using CommonUtilities.Test.Requests;
-using FluentAssertions;
 using WalletBuddy.Application.Services.Expenses.Create;
 
 namespace Validators.Tests.Expenses.Create;
@@ -14,6 +13,6 @@ public class CreateExpenseValidatorTests
 
         var result = validator.Validate(request);
 
-        result.IsValid.Should().BeTrue();
+        Assert.True(result.IsValid);
     }
 }
