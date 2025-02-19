@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\WalletBuddy.Application\WalletBuddy.Application.csproj" />
     <ProjectReference Include="..\..\src\WalletBuddy.Communication\WalletBuddy.Communication.csproj" />
+    <ProjectReference Include="..\..\src\WalletBuddy.Exception\WalletBuddy.Exception.csproj" />
     <ProjectReference Include="..\CommonUtilities.Test\CommonUtilities.Test.csproj" />
   </ItemGroup>
 
