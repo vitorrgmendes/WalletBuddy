@@ -1,5 +1,7 @@
 using WalletBuddy.Api.Filters;
 using WalletBuddy.Api.Middleware;
+using WalletBuddy.Application;
+using WalletBuddy.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
+
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
