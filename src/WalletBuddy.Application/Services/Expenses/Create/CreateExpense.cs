@@ -1,4 +1,5 @@
-﻿using WalletBuddy.Communication.Requests.Expenses;
+﻿using AutoMapper;
+using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Communication.Responses.Expenses;
 using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Repositories;
@@ -10,30 +11,25 @@ public class CreateExpense : ICreateExpense
 {
     private readonly IExpensesRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CreateExpense(IExpensesRepository repository, IUnitOfWork unitOfWork)
+    public CreateExpense(IExpensesRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ResponseExpenseCreatedJson> Execute(RequestExpenseCreateJson request)
     {
         Validate(request);
 
-        var expense = new Expense
-        {
-            Title = request.Title,
-            Description = request.Description,
-            Date = request.Date,
-            Price = request.Price,
-            PaymentType = (Domain.Enums.PaymentType)request.PaymentType
-        };
+        var expense = _mapper.Map<Expense>(request);
 
         await _repository.Add(expense);
         await _unitOfWork.Commit();
 
-        return new ResponseExpenseCreatedJson { Title = expense.Title};
+        return _mapper.Map<ResponseExpenseCreatedJson>(expense);
     }
 
     private void Validate(RequestExpenseCreateJson request)
