@@ -5,5 +5,5 @@ namespace WalletBuddy.Application.Services.Expenses.Create;
 
 public interface ICreateExpense
 {
-    ResponseExpenseCreatedJson Execute(RequestExpenseCreateJson request);
+    Task<ResponseExpenseCreatedJson> Execute(RequestExpenseCreateJson request);
 }

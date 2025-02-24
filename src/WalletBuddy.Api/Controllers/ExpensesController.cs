@@ -14,11 +14,11 @@ public class ExpensesController : ControllerBase
     [ProducesResponseType(typeof(ResponseExpenseCreatedJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
-    public IActionResult Create(
+    public async Task<IActionResult> Create(
         [FromServices] ICreateExpense service,
         [FromBody] RequestExpenseCreateJson request)
     {
-        var response = service.Execute(request);
+        var response = await service.Execute(request);
 
         return Created(string.Empty, response);
     }

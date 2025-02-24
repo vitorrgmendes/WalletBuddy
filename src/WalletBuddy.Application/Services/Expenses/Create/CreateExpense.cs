@@ -17,7 +17,7 @@ public class CreateExpense : ICreateExpense
         _unitOfWork = unitOfWork;
     }
 
-    public ResponseExpenseCreatedJson Execute(RequestExpenseCreateJson request)
+    public async Task<ResponseExpenseCreatedJson> Execute(RequestExpenseCreateJson request)
     {
         Validate(request);
 
@@ -30,8 +30,8 @@ public class CreateExpense : ICreateExpense
             PaymentType = (Domain.Enums.PaymentType)request.PaymentType
         };
 
-        _repository.Add(expense);
-        _unitOfWork.Commit();
+        await _repository.Add(expense);
+        await _unitOfWork.Commit();
 
         return new ResponseExpenseCreatedJson { Title = expense.Title};
     }
