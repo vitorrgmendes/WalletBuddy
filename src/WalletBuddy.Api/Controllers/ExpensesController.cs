@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WalletBuddy.Application.Services.Expenses.Create;
 using WalletBuddy.Application.Services.Expenses.GetAll;
+using WalletBuddy.Application.Services.Expenses.GetById;
 using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Communication.Responses.Error;
 using WalletBuddy.Communication.Responses.Expenses;
@@ -36,5 +37,17 @@ public class ExpensesController : ControllerBase
             return Ok(response);
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseExpenseJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetExpenseById([FromServices] IGetExpenseById service, [FromRoute] long id)
+    {
+        var response = await service.Execute(id);
+
+        return Ok(response);
     }
 }
