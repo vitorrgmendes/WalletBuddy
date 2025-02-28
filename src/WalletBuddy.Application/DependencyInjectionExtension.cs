@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WalletBuddy.Application.AutoMapper;
 using WalletBuddy.Application.Services.Expenses.Create;
+using WalletBuddy.Application.Services.Expenses.GetAll;
 
 namespace WalletBuddy.Application;
 
@@ -20,5 +21,6 @@ public static class DependencyInjectionExtension
     private static void AddServices(IServiceCollection services)
     {
         services.AddScoped<ICreateExpense, CreateExpense>();
+        services.AddScoped<IGetAllExpenses, GetAllExpenses>();
     }
 }

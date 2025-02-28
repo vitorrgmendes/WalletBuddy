@@ -1,4 +1,5 @@
-﻿using WalletBuddy.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Repositories.Expenses;
 
 namespace WalletBuddy.Infrastructure.Database.Repositories;
@@ -15,5 +16,10 @@ internal class ExpensesRepository : IExpensesRepository
     public async Task Add(Expense expense)
     {
         await _dbContext.Expenses.AddAsync(expense);
+    }
+
+    public async Task<List<Expense>> GetAll()
+    {
+        return await _dbContext.Expenses.AsNoTracking().ToListAsync();
     }
 }
