@@ -18,6 +18,12 @@ internal class ExpensesRepository : IExpensesRepository
         await _dbContext.Expenses.AddAsync(expense);
     }
 
+    public async Task<bool> DeleteById(long id)
+    {
+        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id) is Expense expenseToDelete 
+            && _dbContext.Expenses.Remove(expenseToDelete) is not null;
+    }
+
     public async Task<List<Expense>> GetAll()
     {
         return await _dbContext.Expenses.AsNoTracking().ToListAsync();

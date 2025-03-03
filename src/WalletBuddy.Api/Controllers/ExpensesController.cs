@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WalletBuddy.Application.Services.Expenses.Create;
+using WalletBuddy.Application.Services.Expenses.Delete;
 using WalletBuddy.Application.Services.Expenses.GetAll;
 using WalletBuddy.Application.Services.Expenses.GetById;
 using WalletBuddy.Communication.Requests.Expenses;
@@ -49,5 +50,16 @@ public class ExpensesController : ControllerBase
         var response = await service.Execute(id);
 
         return Ok(response);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Delete([FromServices] IDeleteExpense service, [FromRoute] long id)
+    {
+        await service.Execute(id);
+        return NoContent();
     }
 }

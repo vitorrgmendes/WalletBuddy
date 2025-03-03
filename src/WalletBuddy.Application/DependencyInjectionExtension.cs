@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WalletBuddy.Application.AutoMapper;
 using WalletBuddy.Application.Services.Expenses.Create;
+using WalletBuddy.Application.Services.Expenses.Delete;
 using WalletBuddy.Application.Services.Expenses.GetAll;
 using WalletBuddy.Application.Services.Expenses.GetById;
 
@@ -24,5 +25,6 @@ public static class DependencyInjectionExtension
         services.AddScoped<ICreateExpense, CreateExpense>();
         services.AddScoped<IGetAllExpenses, GetAllExpenses>();
         services.AddScoped<IGetExpenseById, GetExpenseById>();
+        services.AddScoped<IDeleteExpense, DeleteExpense>();
     }
 }
