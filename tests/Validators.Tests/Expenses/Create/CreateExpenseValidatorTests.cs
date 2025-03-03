@@ -1,6 +1,5 @@
 ﻿using CommonUtilities.Test.Requests;
-using System.Runtime.CompilerServices;
-using WalletBuddy.Application.Services.Expenses.Create;
+using WalletBuddy.Application.Services.Expenses;
 using WalletBuddy.Communication.Enums;
 using WalletBuddy.Exception;
 
@@ -11,7 +10,7 @@ public class CreateExpenseValidatorTests
     [Fact]
     public void Success()
     {
-        var validator = new CreateExpenseValidator();
+        var validator = new ExpenseValidator();
         var request = RequestExpenseCreateJsonBuilder.Build();
 
         var result = validator.Validate(request);
@@ -23,7 +22,7 @@ public class CreateExpenseValidatorTests
     [MemberData(nameof(GetWrongTitleData))]
     public void ErrorTitleEmpty(string? title)
     {
-        var validator = new CreateExpenseValidator();
+        var validator = new ExpenseValidator();
         var request = RequestExpenseCreateJsonBuilder.Build();
         request.Title = title;
 
@@ -37,7 +36,7 @@ public class CreateExpenseValidatorTests
     [Fact]
     public void ErrorDateFuture()
     {
-        var validator = new CreateExpenseValidator();
+        var validator = new ExpenseValidator();
         var request = RequestExpenseCreateJsonBuilder.Build();
         request.Date = DateTime.UtcNow.AddDays(1);
 
@@ -51,7 +50,7 @@ public class CreateExpenseValidatorTests
     [Fact]
     public void ErrorPaymentTypeInvalid()
     {
-        var validator = new CreateExpenseValidator();
+        var validator = new ExpenseValidator();
         var request = RequestExpenseCreateJsonBuilder.Build();
         request.PaymentType = (PaymentType)55;
 
@@ -67,7 +66,7 @@ public class CreateExpenseValidatorTests
     [InlineData(0)]
     public void ErrorPriceInvalid(decimal price)
     {
-        var validator = new CreateExpenseValidator();
+        var validator = new ExpenseValidator();
         var request = RequestExpenseCreateJsonBuilder.Build();
         request.Price = price;
 

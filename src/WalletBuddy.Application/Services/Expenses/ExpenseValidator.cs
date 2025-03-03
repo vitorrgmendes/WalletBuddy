@@ -2,11 +2,11 @@
 using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Exception;
 
-namespace WalletBuddy.Application.Services.Expenses.Create;
+namespace WalletBuddy.Application.Services.Expenses;
 
-public class CreateExpenseValidator : AbstractValidator<RequestExpenseCreateJson>
+public class ExpenseValidator : AbstractValidator<RequestExpenseJson>
 {
-    public CreateExpenseValidator()
+    public ExpenseValidator()
     {
         RuleFor(expense => expense.Title).NotEmpty().WithMessage(ResourceErrorMessages.TITLE_REQUIRED);
         RuleFor(expense => expense.Price).GreaterThan(0).WithMessage(ResourceErrorMessages.PRICE_GREATER_THAN_ZERO);

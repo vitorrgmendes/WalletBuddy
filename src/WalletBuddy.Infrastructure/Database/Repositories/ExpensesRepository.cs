@@ -33,4 +33,14 @@ internal class ExpensesRepository : IExpensesRepository
     {
         return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
     }
+
+    public async Task<Expense?> GetByIdForChanges(long id)
+    {
+        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
+    }
+
+    public void Update(Expense expense)
+    {
+        _dbContext.Expenses.Update(expense);
+    }
 }

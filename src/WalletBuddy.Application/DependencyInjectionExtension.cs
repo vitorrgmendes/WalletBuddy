@@ -4,6 +4,7 @@ using WalletBuddy.Application.Services.Expenses.Create;
 using WalletBuddy.Application.Services.Expenses.Delete;
 using WalletBuddy.Application.Services.Expenses.GetAll;
 using WalletBuddy.Application.Services.Expenses.GetById;
+using WalletBuddy.Application.Services.Expenses.Update;
 
 namespace WalletBuddy.Application;
 
@@ -26,5 +27,6 @@ public static class DependencyInjectionExtension
         services.AddScoped<IGetAllExpenses, GetAllExpenses>();
         services.AddScoped<IGetExpenseById, GetExpenseById>();
         services.AddScoped<IDeleteExpense, DeleteExpense>();
+        services.AddScoped<IUpdateExpense, UpdateExpense>();
     }
 }

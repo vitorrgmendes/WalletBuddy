@@ -3,6 +3,7 @@ using WalletBuddy.Application.Services.Expenses.Create;
 using WalletBuddy.Application.Services.Expenses.Delete;
 using WalletBuddy.Application.Services.Expenses.GetAll;
 using WalletBuddy.Application.Services.Expenses.GetById;
+using WalletBuddy.Application.Services.Expenses.Update;
 using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Communication.Responses.Error;
 using WalletBuddy.Communication.Responses.Expenses;
@@ -19,7 +20,7 @@ public class ExpensesController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create(
         [FromServices] ICreateExpense service,
-        [FromBody] RequestExpenseCreateJson request)
+        [FromBody] RequestExpenseJson request)
     {
         var response = await service.Execute(request);
 
@@ -60,6 +61,21 @@ public class ExpensesController : ControllerBase
     public async Task<IActionResult> Delete([FromServices] IDeleteExpense service, [FromRoute] long id)
     {
         await service.Execute(id);
+        return NoContent();
+    }
+
+    [HttpPut]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Update(
+        [FromServices] IUpdateExpense service,
+        [FromBody] RequestExpenseJson request,
+        [FromRoute] long id)
+    {
+        await service.Execute(id, request);
         return NoContent();
     }
 }

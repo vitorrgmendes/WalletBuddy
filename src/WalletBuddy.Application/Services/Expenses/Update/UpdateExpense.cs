@@ -1,35 +1,39 @@
 ﻿using AutoMapper;
 using WalletBuddy.Communication.Requests.Expenses;
-using WalletBuddy.Communication.Responses.Expenses;
-using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Expenses;
+using WalletBuddy.Exception;
 using WalletBuddy.Exception.Exception;
 
-namespace WalletBuddy.Application.Services.Expenses.Create;
-public class CreateExpense : ICreateExpense
+namespace WalletBuddy.Application.Services.Expenses.Update;
+
+public class UpdateExpense : IUpdateExpense
 {
-    private readonly IExpensesRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IExpensesRepository _repository;
 
-    public CreateExpense(IExpensesRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public UpdateExpense(IUnitOfWork unitOfWork, IMapper mapper, IExpensesRepository repository)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _repository = repository;
     }
 
-    public async Task<ResponseExpenseCreatedJson> Execute(RequestExpenseJson request)
+    public async Task Execute(long id, RequestExpenseJson request)
     {
         Validate(request);
 
-        var expense = _mapper.Map<Expense>(request);
+        var expense = await _repository.GetByIdForChanges(id);
 
-        await _repository.Add(expense);
+        if (expense is null)
+            throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
+
+        _mapper.Map(request, expense);
+
+        _repository.Update(expense);
+
         await _unitOfWork.Commit();
-
-        return _mapper.Map<ResponseExpenseCreatedJson>(expense);
     }
 
     private void Validate(RequestExpenseJson request)
@@ -43,6 +47,6 @@ public class CreateExpense : ICreateExpense
             var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
 
             throw new ErrorOnValidationException(errorMessages);
-        }        
+        }
     }
 }

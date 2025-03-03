@@ -14,4 +14,8 @@ public interface IExpensesRepository
     /// <param name="id"></param>
     /// <returns>Returns TRUE if the deletion was successful, otherwise returns FALSE.</returns>
     Task<bool> DeleteById(long id);
+
+    void Update(Expense expense);
+
+    Task<Expense?> GetByIdForChanges(long id);
 }

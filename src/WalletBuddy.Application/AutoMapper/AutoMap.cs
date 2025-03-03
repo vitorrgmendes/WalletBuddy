@@ -15,7 +15,7 @@ public class AutoMap : Profile
 
     private void RequestToEntity()
     {
-        CreateMap<RequestExpenseCreateJson, Expense>();
+        CreateMap<RequestExpenseJson, Expense>();
     }
 
     private void EntityToResponse()
