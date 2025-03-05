@@ -39,6 +39,21 @@ internal class ExpensesRepository : IExpensesRepository
         return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
     }
 
+    public async Task<List<Expense>> GetExpensesByMonth(DateOnly date)
+    {
+        var startDate = new DateTime(year: date.Year, month: date.Month, day: 1, hour: 0, minute: 0, second: 0, kind: DateTimeKind.Utc);
+
+        var daysInMonth = DateTime.DaysInMonth(year: date.Year, month: date.Month);
+        var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59, kind: DateTimeKind.Utc);
+
+        return await _dbContext
+            .Expenses
+            .AsNoTracking()
+            .Where(expense => expense.Date >= startDate && expense.Date <= endDate)
+            .OrderBy(expense => expense.Date)
+            .ToListAsync();
+    }
+
     public void Update(Expense expense)
     {
         _dbContext.Expenses.Update(expense);
