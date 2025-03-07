@@ -1,6 +1,4 @@
-# Wallet Buddy
-
-#### English
+### **[English]**
 
 ## About the Project
 
@@ -17,10 +15,31 @@ Among the NuGet packages used, **AutoMapper** is responsible for mapping between
 - **Report Generation**: Ability to export detailed reports to **PDF and Excel**, offering a visual and effective analysis of expenses;
 - **Unit Tests**: Comprehensive tests with FluentAssertions to ensure functionality and quality.
 
+## Getting Started
+
+To run the application locally, follow these simple steps.
+
+### Prerequisites
+
+* [Visual Studio](https://visualstudio.microsoft.com/vs/community/) version 2022+ or [Visual Studio Code](https://code.visualstudio.com/download);
+* Windows 10+ or Linux/MacOS with [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) installed;
+* [PostgreSQL](https://www.postgresql.org/download/) database.
+
+### Installation
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/vitorrgmendes/WalletBuddy.git
+    ```
+
+2. Fill in the information in the `appsettings.Development.json` file according to the `appsettings.Example.json file`;
+3. Run the API and enjoy.
 
 
 
-#### Português (Brasil)
+
+
+### **[Português (Brasil)]**
 
 ## Sobre o projeto
 
@@ -30,9 +49,29 @@ A arquitetura da API é baseada em **REST** e segue os princípios **SOLID**, ut
 
 Entre os pacotes NuGet utilizados, o **AutoMapper** é responsável pelo mapeamento entre objetos de domínio e requisição/resposta, reduzindo a necessidade de código repetitivo e manual. Para realizar as validações, o **FluentValidation** é empregado para implementar regras de validação de forma simples e intuitiva nas classes de requisição, mantendo o código limpo e de fácil manutenção. Por fim, o **Entity Framework** atua como um ORM (Object-Relational Mapper), simplificando as interações com o banco de dados e permitindo o uso de objetos .NET para manipular dados diretamente, sem a necessidade de consultas SQL.
 
-### Features
+### Funcionalidades
 
 - **Domain-Driven Design (DDD)**: Estrutura modular que facilita o entendimento e a manutenção do domínio da aplicação;
 - **RESTful API com Documentação Swagger**: Interface documentada que facilita a integração e o teste por parte dos desenvolvedores;
 - **Geração de Relatórios**: Capacidade de exportar relatórios detalhados para **PDF e Excel**, oferecendo uma análise visual e eficaz das despesas;
 - **Testes de Unidade**: Testes abrangentes com FluentAssertions para garantir a funcionalidade e a qualidade.
+
+## Primeiros passos
+
+Para obter uma cópia local funcionando, siga esses passos simples.
+
+### Requisitos
+
+* [Visual Studio](https://visualstudio.microsoft.com/pt-br/vs/community/) versão 2022+ ou [Visual Studio Code](https://code.visualstudio.com/download)
+* Windows 10+ ou Linux/MacOS com [.NET SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0) instalado
+* Banco de dados [PostgreSQL](https://www.postgresql.org/download/)
+
+### Instalação
+
+1. Clone o repositório:
+    ```sh
+    git clone https://github.com/vitorrgmendes/WalletBuddy.git
+    ```
+
+2. Preencha as informações no arquivo `appsettings.Development.json` conforme o arquivo `appsettings.Example.json`;
+3. Execute a API e aproveite.
