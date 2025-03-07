@@ -1,4 +1,4 @@
-### **[English] **
+### **[English]**
 
 ## About the Project
 
@@ -7,6 +7,8 @@ This API, developed with **.NET 8**, adopts the principles of **Domain-Driven De
 The API architecture is based on **REST** and follows **SOLID** principles, using standard HTTP methods for efficient and streamlined communication. Additionally, the API includes **Swagger** documentation, which provides an interactive graphical interface for developers to explore and test endpoints quickly and easily.
 
 Among the NuGet packages used, **AutoMapper** is responsible for mapping between domain objects and request/response objects, reducing the need for repetitive and manual code. For validations, **FluentValidation** is employed to implement validation rules in a simple and intuitive way in the request classes, keeping the code clean and easy to maintain. Finally, **Entity Framework** acts as an ORM (Object-Relational Mapper), simplifying interactions with the database and allowing the use of .NET objects to manipulate data directly, without the need for SQL queries.
+
+![][hero-image]
 
 ### Features
 
@@ -85,3 +87,6 @@ Para obter uma cópia local funcionando, siga esses passos simples.
 [dot-net-sdk-br]: https://dotnet.microsoft.com/pt-br/download/dotnet/8.0
 [dot-net-sdk-en]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
 [postgre]: https://www.postgresql.org/download/
+
+<!-- Images -->
+[hero-image]: images/heroimage.png
