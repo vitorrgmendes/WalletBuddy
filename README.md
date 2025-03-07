@@ -1,4 +1,4 @@
-### **[English]**
+### **[English] **
 
 ## About the Project
 
@@ -21,9 +21,9 @@ To run the application locally, follow these simple steps.
 
 ### Prerequisites
 
-* [Visual Studio](https://visualstudio.microsoft.com/vs/community/) version 2022+ or [Visual Studio Code](https://code.visualstudio.com/download);
-* Windows 10+ or Linux/MacOS with [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) installed;
-* [PostgreSQL](https://www.postgresql.org/download/) database.
+* [Visual Studio][vs-studio] version 2022+ or [Visual Studio Code][vs-code];
+* Windows 10+ or Linux/MacOS with [.NET SDK][dot-net-sdk-en] installed;
+* [PostgreSQL][postgre] database.
 
 ### Installation
 
@@ -62,9 +62,9 @@ Para obter uma cópia local funcionando, siga esses passos simples.
 
 ### Requisitos
 
-* [Visual Studio](https://visualstudio.microsoft.com/pt-br/vs/community/) versão 2022+ ou [Visual Studio Code](https://code.visualstudio.com/download)
-* Windows 10+ ou Linux/MacOS com [.NET SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0) instalado
-* Banco de dados [PostgreSQL](https://www.postgresql.org/download/)
+* [Visual Studio][vs-studio] versão 2022+ ou [Visual Studio Code][vs-code]
+* Windows 10+ ou Linux/MacOS com [.NET SDK][dot-net-sdk-br] instalado
+* Banco de dados [PostgreSQL][postgre]
 
 ### Instalação
 
@@ -75,3 +75,13 @@ Para obter uma cópia local funcionando, siga esses passos simples.
 
 2. Preencha as informações no arquivo `appsettings.Development.json` conforme o arquivo `appsettings.Example.json`;
 3. Execute a API e aproveite.
+
+
+
+
+<!-- Links -->
+[vs-studio]: https://visualstudio.microsoft.com/vs/community/
+[vs-code]: https://code.visualstudio.com/download
+[dot-net-sdk-br]: https://dotnet.microsoft.com/pt-br/download/dotnet/8.0
+[dot-net-sdk-en]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+[postgre]: https://www.postgresql.org/download/
