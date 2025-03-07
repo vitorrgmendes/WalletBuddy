@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Enums;
+using WalletBuddy.Domain.Extensions;
 using WalletBuddy.Domain.Reports;
 using WalletBuddy.Domain.Repositories.Expenses;
 
@@ -38,18 +39,6 @@ public class GenerateExpensesReportExcel : IGenerateExpensesReportExcel
         return file.ToArray();
     }
 
-    private string ConvertPaymentType(PaymentType payment)
-    {
-        return payment switch
-        {
-            PaymentType.Cash => ResourceReportMessages.CASH,
-            PaymentType.CreditCard => ResourceReportMessages.CREDIT_CARD,
-            PaymentType.DebitCard => ResourceReportMessages.DEBIT_CARD,
-            PaymentType.EletronicTransfer => ResourceReportMessages.ELETRONIC_TRANSFER,
-            _ => string.Empty
-        };
-    }
-
     private void InsertHeader(IXLWorksheet worksheet)
     {
         worksheet.Cell("A1").Value = ResourceReportMessages.TITLE;
@@ -72,7 +61,7 @@ public class GenerateExpensesReportExcel : IGenerateExpensesReportExcel
         {
             worksheet.Cell($"A{row}").Value = expense.Title;
             worksheet.Cell($"B{row}").Value = expense.Date.ToString("dd/MM/yyyy HH:mm:ss");
-            worksheet.Cell($"C{row}").Value = ConvertPaymentType(expense.PaymentType);
+            worksheet.Cell($"C{row}").Value = PaymentTypeExtensions.PaymentTypeToString(expense.PaymentType);
 
             worksheet.Cell($"D{row}").Value = expense.Price;
             worksheet.Cell($"D{row}").Style.NumberFormat.Format = $"{ResourceReportMessages.CURRENCY_SYMBOL} #,##0.00";

@@ -30,7 +30,8 @@ public class ExceptionFilter : IExceptionFilter
 
     private void ThrowUnknowError(ExceptionContext context)
     {
-        var errorResponse = new ResponseErrorJson(context.Exception.Message);
+        //var errorResponse = new ResponseErrorJson(context.Exception.Message);
+        var errorResponse = new ResponseErrorJson("Unknow Server Error.");
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(errorResponse);

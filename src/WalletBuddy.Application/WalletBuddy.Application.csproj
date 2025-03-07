@@ -7,16 +7,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Services\Expenses\Reports\Pdf\Fonts\Raleway-Black.ttf" />
+    <None Remove="Services\Expenses\Reports\Pdf\Fonts\Raleway-Medium.ttf" />
+    <None Remove="Services\Expenses\Reports\Pdf\Fonts\Raleway-Regular.ttf" />
+    <None Remove="Services\Expenses\Reports\Pdf\Fonts\WorkSans-Black.ttf" />
+    <None Remove="Services\Expenses\Reports\Pdf\Fonts\WorkSans-Medium.ttf" />
+    <None Remove="Services\Expenses\Reports\Pdf\Fonts\WorkSans-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Services\Expenses\Reports\Pdf\Fonts\Raleway-Black.ttf" />
+    <EmbeddedResource Include="Services\Expenses\Reports\Pdf\Fonts\Raleway-Medium.ttf" />
+    <EmbeddedResource Include="Services\Expenses\Reports\Pdf\Fonts\Raleway-Regular.ttf" />
+    <EmbeddedResource Include="Services\Expenses\Reports\Pdf\Fonts\WorkSans-Black.ttf" />
+    <EmbeddedResource Include="Services\Expenses\Reports\Pdf\Fonts\WorkSans-Medium.ttf" />
+    <EmbeddedResource Include="Services\Expenses\Reports\Pdf\Fonts\WorkSans-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+    <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WalletBuddy.Communication\WalletBuddy.Communication.csproj" />
     <ProjectReference Include="..\WalletBuddy.Domain\WalletBuddy.Domain.csproj" />
     <ProjectReference Include="..\WalletBuddy.Exception\WalletBuddy.Exception.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Services\Expenses\Reports\Pdf\Logo\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

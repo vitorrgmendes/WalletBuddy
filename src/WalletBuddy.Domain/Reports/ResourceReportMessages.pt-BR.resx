@@ -138,6 +138,9 @@
   <data name="ELETRONIC_TRANSFER" xml:space="preserve">
     <value>Transferência bancária</value>
   </data>
+  <data name="EXPENSES_FOR" xml:space="preserve">
+    <value>Despesas de</value>
+  </data>
   <data name="PAYMENT_TYPE" xml:space="preserve">
     <value>Forma de Pagamento</value>
   </data>
@@ -146,5 +149,8 @@
   </data>
   <data name="TITLE" xml:space="preserve">
     <value>Título</value>
+  </data>
+  <data name="TOTAL_SPENT_IN" xml:space="preserve">
+    <value>Total gasto em {0}</value>
   </data>
 </root>
