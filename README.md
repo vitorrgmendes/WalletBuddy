@@ -1,4 +1,4 @@
-### **[English]**
+![United States](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/75/country-4x3/us.png "United States")
 
 ## About the Project
 
@@ -37,11 +37,9 @@ To run the application locally, follow these simple steps.
 2. Fill in the information in the `appsettings.Development.json` file according to the `appsettings.Example.json file`;
 3. Run the API and enjoy.
 
+<br><br><br>
 
-
-
-
-### **[Português (Brasil)]**
+![Brazil](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/75/country-4x3/br.png "Brazil")
 
 ## Sobre o projeto
 
