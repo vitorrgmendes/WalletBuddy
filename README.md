@@ -1,4 +1,6 @@
-![United States](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/75/country-4x3/us.png "United States")
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/75/country-4x3/us.png" alt="United States" title="United States">
+</p>
 
 ## About the Project
 
@@ -39,7 +41,9 @@ To run the application locally, follow these simple steps.
 
 <br><br><br>
 
-![Brazil](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/75/country-4x3/br.png "Brazil")
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/75/country-4x3/br.png" alt="Brazil" title="Brazil">
+</p>
 
 ## Sobre o projeto
 
