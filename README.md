@@ -51,7 +51,7 @@ A arquitetura da API é baseada em **REST** e segue os princípios **SOLID**, ut
 
 Entre os pacotes NuGet utilizados, o **AutoMapper** é responsável pelo mapeamento entre objetos de domínio e requisição/resposta, reduzindo a necessidade de código repetitivo e manual. Para realizar as validações, o **FluentValidation** é empregado para implementar regras de validação de forma simples e intuitiva nas classes de requisição, mantendo o código limpo e de fácil manutenção. Por fim, o **Entity Framework** atua como um ORM (Object-Relational Mapper), simplificando as interações com o banco de dados e permitindo o uso de objetos .NET para manipular dados diretamente, sem a necessidade de consultas SQL.
 
-![][hero-image]
+![][hero-image-br]
 
 ### Funcionalidades
 
