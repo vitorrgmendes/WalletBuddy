@@ -19,6 +19,15 @@ Among the NuGet packages used, **AutoMapper** is responsible for mapping between
 - **Report Generation**: Ability to export detailed reports to **PDF and Excel**, offering a visual and effective analysis of expenses;
 - **Unit Tests**: Comprehensive tests with FluentAssertions to ensure functionality and quality.
 
+### Tools
+
+![Windows Badge][windows-badge]
+![Visual Studio Badge][visual-studio-badge]
+![.NET Badge][dot-net-badge]
+![PostgreSQL Badge][postgresql-badge]
+![Swagger Badge][swagger-badge]
+![Git-Badge][git-badge]
+
 ## Getting Started
 
 To run the application locally, follow these simple steps.
@@ -62,6 +71,15 @@ Entre os pacotes NuGet utilizados, o **AutoMapper** é responsável pelo mapeame
 - **Geração de Relatórios**: Capacidade de exportar relatórios detalhados para **PDF e Excel**, oferecendo uma análise visual e eficaz das despesas;
 - **Testes de Unidade**: Testes abrangentes com FluentAssertions para garantir a funcionalidade e a qualidade.
 
+### Ferramentas
+
+![Windows Badge][windows-badge]
+![Visual Studio Badge][visual-studio-badge]
+![.NET Badge][dot-net-badge]
+![PostgreSQL Badge][postgresql-badge]
+![Swagger Badge][swagger-badge]
+![Git-Badge][git-badge]
+
 ## Primeiros passos
 
 Para obter uma cópia local funcionando, siga esses passos simples.
@@ -95,3 +113,11 @@ Para obter uma cópia local funcionando, siga esses passos simples.
 <!-- Images -->
 [hero-image]: images/heroimage.png
 [hero-image-br]: images/heroimage-br.png
+
+<!-- Badges -->
+[dot-net-badge]: https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff&style=for-the-badge
+[postgresql-badge]: https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=for-the-badge
+[windows-badge]: https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=fff&style=for-the-badge
+[swagger-badge]: https://img.shields.io/badge/Swagger-85EA2D?logo=swagger&logoColor=000&style=for-the-badge
+[visual-studio-badge]: https://img.shields.io/badge/Visual%20Studio-5C2D91?logo=visualstudio&logoColor=fff&style=for-the-badge
+[git-badge]: https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff&style=for-the-badge
