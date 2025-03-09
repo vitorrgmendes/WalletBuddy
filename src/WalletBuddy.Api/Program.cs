@@ -2,6 +2,7 @@ using WalletBuddy.Api.Filters;
 using WalletBuddy.Api.Middleware;
 using WalletBuddy.Application;
 using WalletBuddy.Infrastructure;
+using WalletBuddy.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,4 +30,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
+await MigrateDatabase();
+
 app.Run();
+
+async Task MigrateDatabase()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await DataBaseMigration.MigrateDatabase(scope.ServiceProvider);
+}

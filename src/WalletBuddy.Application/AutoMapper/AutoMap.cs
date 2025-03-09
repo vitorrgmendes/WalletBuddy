@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using WalletBuddy.Communication.Requests.Expenses;
+using WalletBuddy.Communication.Requests.Users;
 using WalletBuddy.Communication.Responses.Expenses;
+using WalletBuddy.Communication.Responses.Users;
 using WalletBuddy.Domain.Entities;
 
 namespace WalletBuddy.Application.AutoMapper;
@@ -16,6 +18,8 @@ public class AutoMap : Profile
     private void RequestToEntity()
     {
         CreateMap<RequestExpenseJson, Expense>();
+        CreateMap<RequestUserJson, User>()
+            .ForMember(entity => entity.Password, config => config.Ignore());
     }
 
     private void EntityToResponse()

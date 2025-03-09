@@ -1,0 +1,25 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using WalletBuddy.Application.Services.Users.Create;
+using WalletBuddy.Communication.Requests.Users;
+using WalletBuddy.Communication.Responses.Error;
+using WalletBuddy.Communication.Responses.Users;
+
+namespace WalletBuddy.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class UserController : ControllerBase
+{
+    [HttpPost]
+    [ProducesResponseType(typeof(ResponseUserCreatedJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateUser(
+        [FromServices] ICreateUser service,
+        [FromBody] RequestUserJson request)
+    {
+        var response = await service.Execute(request);
+
+        return Created(string.Empty, response);
+    }
+}

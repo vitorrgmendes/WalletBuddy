@@ -30,6 +30,7 @@ public class UpdateExpense : IUpdateExpense
             throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
 
         _mapper.Map(request, expense);
+        expense.UpdatedAt = DateTime.UtcNow;
 
         _repository.Update(expense);
 

@@ -23,4 +23,14 @@ public class Expense
 
     [Column("paymenttype")]
     public PaymentType PaymentType { get; set; }
+
+    [Column("created_at")]
+    public DateTime CreatedAt { get; set; }
+
+    [Column("updated_at")]
+    public DateTime UpdatedAt { get; set; }
+
+    [Column("user_id")]
+    public long UserId { get; set; }
+    public User User { get; set; } = default!;
 }

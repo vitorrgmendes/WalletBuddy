@@ -25,6 +25,8 @@ public class CreateExpense : ICreateExpense
         Validate(request);
 
         var expense = _mapper.Map<Expense>(request);
+        expense.CreatedAt = DateTime.UtcNow;
+        expense.UpdatedAt = DateTime.UtcNow;
 
         await _repository.Add(expense);
         await _unitOfWork.Commit();

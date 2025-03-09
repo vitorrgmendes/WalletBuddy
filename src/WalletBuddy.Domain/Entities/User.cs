@@ -1,0 +1,17 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using WalletBuddy.Domain.Enums;
+
+namespace WalletBuddy.Domain.Entities;
+
+[Table("users")]
+public class User
+{
+    public long Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public Guid UserIdentifier { get; set; }
+    public string Role { get; set; } = Roles.TEAM_MEMBER;
+    public DateTime Created_At { get; set; }
+    public DateTime Updated_At { get; set; }
+}

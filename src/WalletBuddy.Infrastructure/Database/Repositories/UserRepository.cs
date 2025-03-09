@@ -1,0 +1,22 @@
+﻿using Microsoft.EntityFrameworkCore;
+using WalletBuddy.Domain.Entities;
+using WalletBuddy.Domain.Repositories.Users;
+
+namespace WalletBuddy.Infrastructure.Database.Repositories;
+
+internal class UserRepository : IUserRepository
+{
+    private readonly WalletBuddyDbContext _dbContext;
+
+    public UserRepository(WalletBuddyDbContext dbContext) => _dbContext = dbContext;
+
+    public async Task<bool> ExistActiveUserWithEmail(string email)
+    {
+        return await _dbContext.Users.AnyAsync(user => user.Email.Equals(email));
+    }
+
+    public async Task Register(User user)
+    {
+        await _dbContext.Users.AddAsync(user);
+    }
+}
