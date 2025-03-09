@@ -45,7 +45,7 @@ To run the application locally, follow these simple steps.
     git clone https://github.com/vitorrgmendes/WalletBuddy.git
     ```
 
-2. Fill in the information in the `appsettings.Development.json` file according to the `appsettings.Example.json file`;
+2. Fill in the information in the `appsettings.Development.json` file according to the `appsettings.Example.json` file;
 3. Run the API and enjoy.
 
 <br><br><br>
