@@ -1,7 +1,7 @@
 ﻿using WalletBuddy.Domain.Security.Cryptography;
 using BC = BCrypt.Net.BCrypt;
 
-namespace WalletBuddy.Infrastructure.Security;
+namespace WalletBuddy.Infrastructure.Security.Cryptography;
 
 internal class BCrypt : IPasswordEncripter
 {

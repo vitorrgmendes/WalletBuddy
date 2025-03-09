@@ -6,6 +6,7 @@ using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Users;
 using WalletBuddy.Domain.Security.Cryptography;
+using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Exception;
 using WalletBuddy.Exception.Exception;
 
@@ -16,18 +17,21 @@ public class CreateUser : ICreateUser
     private readonly IMapper _mapper;
     private readonly IPasswordEncripter _passwordEncripter;
     private readonly IUserRepository _userRepository;
-    private readonly IUnitOfWork _unitOfWork; 
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public CreateUser(
         IMapper mapper, 
         IPasswordEncripter passwordEncripter, 
         IUserRepository userRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IAccessTokenGenerator accessTokenGenerator)
     {
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<ResponseUserCreatedJson> Execute(RequestUserJson request)
@@ -47,7 +51,7 @@ public class CreateUser : ICreateUser
         return new ResponseUserCreatedJson
         {
             Name = user.Name,
-            Token = string.Empty
+            Token = _accessTokenGenerator.GenerateAccessToken(user)
         };
     }
 
