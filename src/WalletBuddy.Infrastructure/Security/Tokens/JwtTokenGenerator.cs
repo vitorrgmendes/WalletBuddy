@@ -18,7 +18,7 @@ internal class JwtTokenGenerator : IAccessTokenGenerator
         _signingKey = signingKey;
     }
 
-    public string GenerateAccessToken(User user)
+    public string Generate(User user)
     {
         var tokenDescriptor = new SecurityTokenDescriptor
         {

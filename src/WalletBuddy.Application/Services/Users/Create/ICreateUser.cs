@@ -5,5 +5,5 @@ namespace WalletBuddy.Application.Services.Users.Create;
 
 public interface ICreateUser
 {
-    Task<ResponseUserCreatedJson> Execute(RequestUserJson request);
+    Task<ResponseUserRegisteredJson> Execute(RequestUserJson request);
 }

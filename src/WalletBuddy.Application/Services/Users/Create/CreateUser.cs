@@ -34,7 +34,7 @@ public class CreateUser : ICreateUser
         _accessTokenGenerator = accessTokenGenerator;
     }
 
-    public async Task<ResponseUserCreatedJson> Execute(RequestUserJson request)
+    public async Task<ResponseUserRegisteredJson> Execute(RequestUserJson request)
     {
         await Validate(request);
 
@@ -48,10 +48,10 @@ public class CreateUser : ICreateUser
         await _userRepository.Register(user);
         await _unitOfWork.Commit();
 
-        return new ResponseUserCreatedJson
+        return new ResponseUserRegisteredJson
         {
             Name = user.Name,
-            Token = _accessTokenGenerator.GenerateAccessToken(user)
+            Token = _accessTokenGenerator.Generate(user)
         };
     }
 

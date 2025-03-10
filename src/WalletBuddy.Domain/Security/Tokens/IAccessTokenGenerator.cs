@@ -4,5 +4,5 @@ namespace WalletBuddy.Domain.Security.Tokens;
 
 public interface IAccessTokenGenerator
 {
-    string GenerateAccessToken(User user);
+    string Generate(User user);
 }

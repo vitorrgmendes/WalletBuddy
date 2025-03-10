@@ -11,7 +11,7 @@ namespace WalletBuddy.Api.Controllers;
 public class UserController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseUserCreatedJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseUserRegisteredJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateUser(
