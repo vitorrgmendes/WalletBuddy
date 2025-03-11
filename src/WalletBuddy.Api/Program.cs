@@ -3,8 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using WalletBuddy.Api.Filters;
+using WalletBuddy.Api.Filters.CustomAttributes;
 using WalletBuddy.Api.Middleware;
 using WalletBuddy.Application;
+using WalletBuddy.Domain.Security.Constants;
 using WalletBuddy.Infrastructure;
 using WalletBuddy.Infrastructure.Migrations;
 
@@ -14,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+// Add Swagger Token info
 builder.Services.AddSwaggerGen(config => 
 {
     config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -46,12 +49,17 @@ builder.Services.AddSwaggerGen(config =>
     });
 });
 
+// Exceptions Filter
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
+// API Key Filter
+builder.Services.AddScoped<ApiKeyAuthFilter>();
 
+// Dependency Injection
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
-var signingKey = builder.Configuration.GetValue<string>("Settings:Jwt:SigningKey");
+// JWT Authorization
+var signingKey = builder.Configuration.GetValue<string>(SecurityConstants.JWT_SIGNINGKEY_PATH);
 builder.Services.AddAuthentication(config =>
 {
     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,15 +83,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Languages Middleware
 app.UseMiddleware<CultureMiddleware>();
 
 app.UseHttpsRedirection();
 
+// Auth
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
+// Auto Run Migrations
 await MigrateDatabase();
 
 app.Run();

@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WalletBuddy.Application.AutoMapper;
-using WalletBuddy.Application.Services.Auth.Login;
-using WalletBuddy.Application.Services.Auth.Logout;
-using WalletBuddy.Application.Services.Auth.RefreshToken;
 using WalletBuddy.Application.Services.Expenses.Create;
 using WalletBuddy.Application.Services.Expenses.Delete;
 using WalletBuddy.Application.Services.Expenses.GetAll;
@@ -10,6 +7,9 @@ using WalletBuddy.Application.Services.Expenses.GetById;
 using WalletBuddy.Application.Services.Expenses.Reports.Excel;
 using WalletBuddy.Application.Services.Expenses.Reports.Pdf;
 using WalletBuddy.Application.Services.Expenses.Update;
+using WalletBuddy.Application.Services.TokenAuthentication.Login;
+using WalletBuddy.Application.Services.TokenAuthentication.Logout;
+using WalletBuddy.Application.Services.TokenAuthentication.RefreshToken;
 using WalletBuddy.Application.Services.Users.Create;
 
 namespace WalletBuddy.Application;

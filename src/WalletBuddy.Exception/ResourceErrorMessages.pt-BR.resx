@@ -153,4 +153,10 @@
   <data name="INVALID_CREDENTIALS" xml:space="preserve">
     <value>Não autorizado.</value>
   </data>
+  <data name="INVALID_API_KEY" xml:space="preserve">
+    <value>Chave da API inválida.</value>
+  </data>
+  <data name="MISSING_API_KEY" xml:space="preserve">
+    <value>A chave da API está ausente.</value>
+  </data>
 </root>
