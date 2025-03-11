@@ -4,10 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Expenses;
 using WalletBuddy.Domain.Repositories.Users;
+using WalletBuddy.Domain.Security.ApiKey;
+using WalletBuddy.Domain.Security.Constants;
 using WalletBuddy.Domain.Security.Cryptography;
 using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Infrastructure.Database;
 using WalletBuddy.Infrastructure.Database.Repositories;
+using WalletBuddy.Infrastructure.Security.ApiKey;
 using WalletBuddy.Infrastructure.Security.Tokens;
 
 namespace WalletBuddy.Infrastructure;
@@ -20,6 +23,13 @@ public static class DependencyInjectionExtension
         AddRepositories(services);
         AddSecurity(services);
         AddToken(services, configuration);
+        AddApiKey(services, configuration);
+    }
+
+    private static void AddApiKey(IServiceCollection services, IConfiguration configuration)
+    {
+        var apiKey = configuration.GetValue<string>(SecurityConstants.API_KEY_PATH_NAME);
+        services.AddScoped<IApiKeyValidation>(config => new ApiKeyValidation(apiKey!));
     }
 
     private static void AddSecurity(IServiceCollection services)
@@ -29,9 +39,9 @@ public static class DependencyInjectionExtension
 
     private static void AddToken(IServiceCollection services, IConfiguration configuration)
     {
-        var expirationTimeMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpiresMinutes");
-        var signingKey = configuration.GetValue<string>("Settings:Jwt:SigningKey");
-        var refreshTokenExpirationDays = configuration.GetValue<double>("Settings:Jwt:RefreshTokenExpiresDays");
+        var expirationTimeMinutes = configuration.GetValue<uint>(SecurityConstants.JWT_TOKEN_EXPIRATION_PATH);
+        var signingKey = configuration.GetValue<string>(SecurityConstants.JWT_SIGNINGKEY_PATH);
+        var refreshTokenExpirationDays = configuration.GetValue<double>(SecurityConstants.REFRESH_TOKEN_EXPIRATION_PATH);
 
         services.AddScoped<IAccessTokenGenerator>(config => new JwtTokenGenerator(expirationTimeMinutes, signingKey!, refreshTokenExpirationDays));
     }

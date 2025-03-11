@@ -6,7 +6,7 @@ using WalletBuddy.Domain.Security.Cryptography;
 using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Exception.Exception;
 
-namespace WalletBuddy.Application.Services.Auth.Login;
+namespace WalletBuddy.Application.Services.TokenAuthentication.Login;
 
 public class LoginUser : ILoginUser
 {

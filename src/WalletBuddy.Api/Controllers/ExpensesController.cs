@@ -14,6 +14,7 @@ namespace WalletBuddy.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
+// [ApiKey]
 public class ExpensesController : ControllerBase
 {
     [HttpPost]

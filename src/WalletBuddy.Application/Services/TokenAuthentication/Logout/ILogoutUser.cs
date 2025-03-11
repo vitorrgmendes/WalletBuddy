@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace WalletBuddy.Application.Services.Auth.Logout;
+namespace WalletBuddy.Application.Services.TokenAuthentication.Logout;
 
 public interface ILogoutUser
 {

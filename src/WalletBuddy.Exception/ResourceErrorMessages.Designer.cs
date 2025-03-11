@@ -106,6 +106,15 @@ namespace WalletBuddy.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid API Key..
+        /// </summary>
+        public static string INVALID_API_KEY {
+            get {
+                return ResourceManager.GetString("INVALID_API_KEY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unauthorized..
         /// </summary>
         public static string INVALID_CREDENTIALS {
@@ -129,6 +138,15 @@ namespace WalletBuddy.Exception {
         public static string INVALID_PASSWORD {
             get {
                 return ResourceManager.GetString("INVALID_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API Key is missing..
+        /// </summary>
+        public static string MISSING_API_KEY {
+            get {
+                return ResourceManager.GetString("MISSING_API_KEY", resourceCulture);
             }
         }
         

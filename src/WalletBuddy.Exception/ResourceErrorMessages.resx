@@ -153,4 +153,10 @@
   <data name="INVALID_CREDENTIALS" xml:space="preserve">
     <value>Unauthorized.</value>
   </data>
+  <data name="INVALID_API_KEY" xml:space="preserve">
+    <value>Invalid API Key.</value>
+  </data>
+  <data name="MISSING_API_KEY" xml:space="preserve">
+    <value>API Key is missing.</value>
+  </data>
 </root>
