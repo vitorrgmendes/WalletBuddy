@@ -106,11 +106,20 @@ namespace WalletBuddy.Exception {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid email and/or password..
+        ///   Looks up a localized string similar to Unauthorized..
         /// </summary>
         public static string INVALID_CREDENTIALS {
             get {
                 return ResourceManager.GetString("INVALID_CREDENTIALS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email and/or password..
+        /// </summary>
+        public static string INVALID_LOGIN {
+            get {
+                return ResourceManager.GetString("INVALID_LOGIN", resourceCulture);
             }
         }
         

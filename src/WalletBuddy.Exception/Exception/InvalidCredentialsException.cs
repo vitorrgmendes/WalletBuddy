@@ -3,9 +3,9 @@ using System.Net;
 
 namespace WalletBuddy.Exception.Exception;
 
-public class InvalidLoginException : WalletBuddyException
+public class InvalidCredentialsException : WalletBuddyException
 {
-    public InvalidLoginException() : base(ResourceErrorMessages.INVALID_LOGIN)
+    public InvalidCredentialsException() : base(ResourceErrorMessages.INVALID_CREDENTIALS)
     {        
     }
 

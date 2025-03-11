@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WalletBuddy.Application.AutoMapper;
 using WalletBuddy.Application.Services.Auth.Login;
+using WalletBuddy.Application.Services.Auth.Logout;
 using WalletBuddy.Application.Services.Auth.RefreshToken;
 using WalletBuddy.Application.Services.Expenses.Create;
 using WalletBuddy.Application.Services.Expenses.Delete;
@@ -38,5 +39,6 @@ public static class DependencyInjectionExtension
         services.AddScoped<IRegisterUser, RegisterUser>();
         services.AddScoped<ILoginUser, LoginUser>();
         services.AddScoped<IRefreshToken, RefreshToken>();
+        services.AddScoped<ILogoutUser, LogoutUser>();
     }
 }

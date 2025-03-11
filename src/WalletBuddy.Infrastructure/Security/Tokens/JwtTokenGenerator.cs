@@ -12,11 +12,13 @@ internal class JwtTokenGenerator : IAccessTokenGenerator
 {
     private readonly uint _expirationTimeMinutes;
     private readonly string _signingKey;
+    public double RefreshTokenExpirationDays { get; private set; }
 
-    public JwtTokenGenerator(uint expirationTimeMinutes, string signingKey)
+    public JwtTokenGenerator(uint expirationTimeMinutes, string signingKey, double refreshTokenExpiration)
     {
         _expirationTimeMinutes = expirationTimeMinutes;
         _signingKey = signingKey;
+        RefreshTokenExpirationDays = refreshTokenExpiration;
     }
 
     public string Generate(User user)

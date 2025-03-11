@@ -44,7 +44,7 @@ public class LoginUser : ILoginUser
         };
 
         user.RefreshToken = response.RefreshToken;        
-        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
+        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(_accessTokenGenerator.RefreshTokenExpirationDays);
         user.LastLogin_At = DateTime.UtcNow;
         _userRepository.Update(user);
         await _unitOfWork.Commit();

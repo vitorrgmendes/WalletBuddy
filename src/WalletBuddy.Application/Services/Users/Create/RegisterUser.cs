@@ -52,7 +52,7 @@ public class RegisterUser : IRegisterUser
         user.Created_At = DateTime.UtcNow;
         user.Updated_At = DateTime.UtcNow;
         user.RefreshToken = response.RefreshToken;
-        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
+        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(_accessTokenGenerator.RefreshTokenExpirationDays);
         // user.LastLogin_At = DateTime.UtcNow;
 
         await _userRepository.Register(user);

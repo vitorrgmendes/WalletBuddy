@@ -31,14 +31,14 @@ public class RefreshToken : IRefreshToken
         var emailClaim = principal?.FindFirst(ClaimTypes.Email);
         var email = emailClaim?.Value;
         if (email is null)
-            throw new InvalidLoginException();
+            throw new InvalidCredentialsException();
 
         var user = await _userRepository.GetUserByEmail(email);
         if (user is null || 
             user.RefreshToken != request.RefreshToken || 
             user.RefreshTokenExpiration < DateTime.UtcNow
             ) 
-            throw new InvalidLoginException();
+            throw new InvalidCredentialsException();
 
         var response = new ResponseUserRegisteredJson
         {
