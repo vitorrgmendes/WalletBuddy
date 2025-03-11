@@ -12,7 +12,7 @@ using WalletBuddy.Exception.Exception;
 
 namespace WalletBuddy.Application.Services.Users.Create;
 
-public class CreateUser : ICreateUser
+public class RegisterUser : IRegisterUser
 {
     private readonly IMapper _mapper;
     private readonly IPasswordEncripter _passwordEncripter;
@@ -20,7 +20,7 @@ public class CreateUser : ICreateUser
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
 
-    public CreateUser(
+    public RegisterUser(
         IMapper mapper, 
         IPasswordEncripter passwordEncripter, 
         IUserRepository userRepository,
@@ -36,23 +36,29 @@ public class CreateUser : ICreateUser
 
     public async Task<ResponseUserRegisteredJson> Execute(RequestUserJson request)
     {
-        await Validate(request);
+        await Validate(request);               
 
         var user = _mapper.Map<User>(request);
+
+        var response = new ResponseUserRegisteredJson
+        {
+            Name = request.Name,
+            Token = _accessTokenGenerator.Generate(user),
+            RefreshToken = _accessTokenGenerator.GenerateRefreshToken()
+        };
 
         user.Password = _passwordEncripter.Encrypt(request.Password);
         user.UserIdentifier = Guid.NewGuid();
         user.Created_At = DateTime.UtcNow;
         user.Updated_At = DateTime.UtcNow;
+        user.RefreshToken = response.RefreshToken;
+        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
+        // user.LastLogin_At = DateTime.UtcNow;
 
         await _userRepository.Register(user);
         await _unitOfWork.Commit();
 
-        return new ResponseUserRegisteredJson
-        {
-            Name = user.Name,
-            Token = _accessTokenGenerator.Generate(user)
-        };
+        return response;
     }
 
     private async Task Validate(RequestUserJson request)

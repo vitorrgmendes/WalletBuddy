@@ -14,4 +14,8 @@ public class User
     public string Role { get; set; } = Roles.TEAM_MEMBER;
     public DateTime Created_At { get; set; }
     public DateTime Updated_At { get; set; }
+    public DateTime? Deleted_At { get; set; }
+    public DateTime? LastLogin_At { get; set; }
+    public string? RefreshToken { get; set; } = string.Empty;
+    public DateTime? RefreshTokenExpiration { get; set; }
 }

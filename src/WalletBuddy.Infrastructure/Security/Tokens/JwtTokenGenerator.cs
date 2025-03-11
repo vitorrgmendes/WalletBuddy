@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Security.Tokens;
@@ -47,8 +48,34 @@ internal class JwtTokenGenerator : IAccessTokenGenerator
         return new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Name),
+            new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString()),
             new Claim(ClaimTypes.Role, user.Role.ToString())
         };
+    }
+
+    public string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[64];
+
+        using var numberGenerator = RandomNumberGenerator.Create();
+
+        numberGenerator.GetBytes(randomNumber);
+
+        return Convert.ToBase64String(randomNumber);
+    }
+
+    public ClaimsPrincipal? GetTokenPrincipal(string accessToken)
+    {
+        var validation = new TokenValidationParameters
+        {
+            IssuerSigningKey = SecurityKey(),
+            ValidateLifetime = false,
+            ValidateActor = false,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
+
+        return new JwtSecurityTokenHandler().ValidateToken(accessToken, validation, out _);
     }
 }

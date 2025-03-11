@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WalletBuddy.Application.AutoMapper;
+using WalletBuddy.Application.Services.Auth.Login;
+using WalletBuddy.Application.Services.Auth.RefreshToken;
 using WalletBuddy.Application.Services.Expenses.Create;
 using WalletBuddy.Application.Services.Expenses.Delete;
 using WalletBuddy.Application.Services.Expenses.GetAll;
@@ -7,7 +9,6 @@ using WalletBuddy.Application.Services.Expenses.GetById;
 using WalletBuddy.Application.Services.Expenses.Reports.Excel;
 using WalletBuddy.Application.Services.Expenses.Reports.Pdf;
 using WalletBuddy.Application.Services.Expenses.Update;
-using WalletBuddy.Application.Services.Login;
 using WalletBuddy.Application.Services.Users.Create;
 
 namespace WalletBuddy.Application;
@@ -34,7 +35,8 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUpdateExpense, UpdateExpense>();
         services.AddScoped<IGenerateExpensesReportExcel, GenerateExpensesReportExcel>();
         services.AddScoped<IGenerateExpensesReportPdf, GenerateExpensesReportPdf>();
-        services.AddScoped<ICreateUser, CreateUser>();
+        services.AddScoped<IRegisterUser, RegisterUser>();
         services.AddScoped<ILoginUser, LoginUser>();
+        services.AddScoped<IRefreshToken, RefreshToken>();
     }
 }

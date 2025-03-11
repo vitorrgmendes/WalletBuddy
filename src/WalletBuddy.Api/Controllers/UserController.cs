@@ -10,12 +10,12 @@ namespace WalletBuddy.Api.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("Register")]
     [ProducesResponseType(typeof(ResponseUserRegisteredJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateUser(
-        [FromServices] ICreateUser service,
+    public async Task<IActionResult> RegisterUser(
+        [FromServices] IRegisterUser service,
         [FromBody] RequestUserJson request)
     {
         var response = await service.Execute(request);

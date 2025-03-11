@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WalletBuddy.Application.Services.Expenses.Create;
 using WalletBuddy.Application.Services.Expenses.Delete;
 using WalletBuddy.Application.Services.Expenses.GetAll;
@@ -12,6 +13,7 @@ namespace WalletBuddy.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ExpensesController : ControllerBase
 {
     [HttpPost]

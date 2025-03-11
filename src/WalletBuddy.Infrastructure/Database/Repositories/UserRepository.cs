@@ -17,11 +17,16 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetUserByEmail(string email)
     {
-        return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email));
+        return await _dbContext.Users.FirstOrDefaultAsync(user => user.Email.Equals(email));
     }
 
     public async Task Register(User user)
     {
         await _dbContext.Users.AddAsync(user);
+    }
+
+    public void Update(User user)
+    {
+        _dbContext.Users.Update(user);
     }
 }

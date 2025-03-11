@@ -12,7 +12,7 @@ using WalletBuddy.Infrastructure.Database;
 namespace WalletBuddy.Infrastructure.Migrations
 {
     [DbContext(typeof(WalletBuddyDbContext))]
-    [Migration("20250308215721_InitialMigration")]
+    [Migration("20250311041437_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -89,10 +89,18 @@ namespace WalletBuddy.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<DateTime?>("Deleted_At")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
+
+                    b.Property<DateTime?>("LastLogin_At")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("lastlogin_at");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -103,6 +111,14 @@ namespace WalletBuddy.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text")
+                        .HasColumnName("refreshtoken");
+
+                    b.Property<DateTime?>("RefreshTokenExpiration")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("refreshtokenexpiration");
 
                     b.Property<string>("Role")
                         .IsRequired()
