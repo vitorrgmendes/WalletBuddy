@@ -20,7 +20,7 @@ public class CreateExpenseValidatorTests
 
     [Theory]
     [MemberData(nameof(GetWrongTitleData))]
-    public void ErrorTitleEmpty(string? title)
+    public void ErrorTitleEmpty(string title)
     {
         var validator = new ExpenseValidator();
         var request = RequestExpenseCreateJsonBuilder.Build();
