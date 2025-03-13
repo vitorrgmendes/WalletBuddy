@@ -9,7 +9,7 @@ public class RegisterUserValidatorTest
     [Fact]
     public void Success()
     {
-        var validator = new CreateUserValidator();
+        var validator = new RegisterUserValidator();
         var request = RequestRegisterUserJsonBuilder.Build();
 
         var result = validator.Validate(request);
@@ -20,7 +20,7 @@ public class RegisterUserValidatorTest
     [MemberData(nameof(GetEmptyData))]
     public void Error_Empty_Name(string name)
     {
-        var validator = new CreateUserValidator();
+        var validator = new RegisterUserValidator();
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Name = name;
 
@@ -35,7 +35,7 @@ public class RegisterUserValidatorTest
     [MemberData(nameof(GetEmptyData))]
     public void Error_Empty_Email(string email)
     {
-        var validator = new CreateUserValidator();
+        var validator = new RegisterUserValidator();
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Email = email;
 
@@ -49,7 +49,7 @@ public class RegisterUserValidatorTest
     [Fact]
     public void Error_Invalid_Email()
     {
-        var validator = new CreateUserValidator();
+        var validator = new RegisterUserValidator();
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Email = "test123.com";
 
@@ -64,7 +64,7 @@ public class RegisterUserValidatorTest
     [MemberData(nameof(GetEmptyData))]
     public void Error_Empty_Password(string password)
     {
-        var validator = new CreateUserValidator();
+        var validator = new RegisterUserValidator();
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Password = password;
 

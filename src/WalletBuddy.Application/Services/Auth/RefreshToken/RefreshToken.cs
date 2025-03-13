@@ -6,7 +6,7 @@ using WalletBuddy.Domain.Repositories.Users;
 using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Exception.Exception;
 
-namespace WalletBuddy.Application.Services.TokenAuthentication.RefreshToken;
+namespace WalletBuddy.Application.Services.Auth.RefreshToken;
 
 public class RefreshToken : IRefreshToken
 {

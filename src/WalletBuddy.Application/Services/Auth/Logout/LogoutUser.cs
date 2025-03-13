@@ -3,7 +3,7 @@ using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Users;
 using WalletBuddy.Exception.Exception;
 
-namespace WalletBuddy.Application.Services.TokenAuthentication.Logout;
+namespace WalletBuddy.Application.Services.Auth.Logout;
 
 public class LogoutUser : ILogoutUser
 {

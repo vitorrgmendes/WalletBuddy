@@ -4,9 +4,9 @@ using WalletBuddy.Exception;
 
 namespace WalletBuddy.Application.Services.Users;
 
-public class CreateUserValidator : AbstractValidator<RequestUserJson>
+public class RegisterUserValidator : AbstractValidator<RequestUserJson>
 {
-    public CreateUserValidator()
+    public RegisterUserValidator()
     {
         RuleFor(user => user.Name)
             .NotEmpty()

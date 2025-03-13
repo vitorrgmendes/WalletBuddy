@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using WalletBuddy.Application.Services.TokenAuthentication.Login;
-using WalletBuddy.Application.Services.TokenAuthentication.Logout;
-using WalletBuddy.Application.Services.TokenAuthentication.RefreshToken;
+using WalletBuddy.Application.Services.Auth.Login;
+using WalletBuddy.Application.Services.Auth.Logout;
+using WalletBuddy.Application.Services.Auth.RefreshToken;
 using WalletBuddy.Communication.Requests.Login;
 using WalletBuddy.Communication.Responses.Error;
 using WalletBuddy.Communication.Responses.Users;
