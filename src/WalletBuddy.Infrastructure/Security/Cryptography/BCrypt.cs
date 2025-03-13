@@ -3,7 +3,7 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace WalletBuddy.Infrastructure.Security.Cryptography;
 
-internal class BCrypt : IPasswordEncripter
+internal class BCrypt : IPasswordEncrypter
 {
     public string Encrypt(string password)
     {

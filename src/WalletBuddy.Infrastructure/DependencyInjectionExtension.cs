@@ -34,7 +34,7 @@ public static class DependencyInjectionExtension
 
     private static void AddSecurity(IServiceCollection services)
     {
-        services.AddScoped<IPasswordEncripter, Security.Cryptography.BCrypt>();
+        services.AddScoped<IPasswordEncrypter, Security.Cryptography.BCrypt>();
     }
 
     private static void AddToken(IServiceCollection services, IConfiguration configuration)

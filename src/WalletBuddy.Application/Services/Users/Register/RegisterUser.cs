@@ -15,20 +15,20 @@ namespace WalletBuddy.Application.Services.Users.Register;
 public class RegisterUser : IRegisterUser
 {
     private readonly IMapper _mapper;
-    private readonly IPasswordEncripter _passwordEncripter;
+    private readonly IPasswordEncrypter _passwordEncrypter;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public RegisterUser(
         IMapper mapper, 
-        IPasswordEncripter passwordEncripter, 
+        IPasswordEncrypter passwordEncrypter, 
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
         IAccessTokenGenerator accessTokenGenerator)
     {
         _mapper = mapper;
-        _passwordEncripter = passwordEncripter;
+        _passwordEncrypter = passwordEncrypter;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _accessTokenGenerator = accessTokenGenerator;
@@ -47,7 +47,7 @@ public class RegisterUser : IRegisterUser
             RefreshToken = _accessTokenGenerator.GenerateRefreshToken()
         };
 
-        user.Password = _passwordEncripter.Encrypt(request.Password);
+        user.Password = _passwordEncrypter.Encrypt(request.Password);
         user.UserIdentifier = Guid.NewGuid();
         user.Created_At = DateTime.UtcNow;
         user.Updated_At = DateTime.UtcNow;
