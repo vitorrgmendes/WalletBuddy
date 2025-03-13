@@ -12,5 +12,10 @@ public class UserRepositoryBuilder
         _repository = new Mock<IUserRepository>();
     }
 
+    public void ExistActiveUserWithEmail(string email)
+    {
+        _repository.Setup(userRepository => userRepository.ExistActiveUserWithEmail(email)).ReturnsAsync(true);
+    }
+
     public IUserRepository Build() => _repository.Object;
 }
