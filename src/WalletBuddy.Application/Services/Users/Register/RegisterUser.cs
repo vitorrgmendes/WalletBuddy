@@ -10,7 +10,7 @@ using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Exception;
 using WalletBuddy.Exception.Exception;
 
-namespace WalletBuddy.Application.Services.Users.Create;
+namespace WalletBuddy.Application.Services.Users.Register;
 
 public class RegisterUser : IRegisterUser
 {
@@ -63,7 +63,7 @@ public class RegisterUser : IRegisterUser
 
     private async Task Validate(RequestUserJson request)
     { 
-        var result = new CreateUserValidator().Validate(request);
+        var result = new RegisterUserValidator().Validate(request);
 
         await _userRepository.ExistActiveUserWithEmail(request.Email).ContinueWith(task =>
         {

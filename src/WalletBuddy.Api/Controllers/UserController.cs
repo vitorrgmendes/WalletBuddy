@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WalletBuddy.Application.Services.Users.Create;
+using WalletBuddy.Application.Services.Users.Register;
 using WalletBuddy.Communication.Requests.Users;
 using WalletBuddy.Communication.Responses.Error;
 using WalletBuddy.Communication.Responses.Users;
