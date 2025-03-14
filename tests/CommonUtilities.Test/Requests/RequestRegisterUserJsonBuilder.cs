@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using System.Net.NetworkInformation;
 using WalletBuddy.Communication.Requests.Users;
 
 namespace CommonUtilities.Test.Requests;
