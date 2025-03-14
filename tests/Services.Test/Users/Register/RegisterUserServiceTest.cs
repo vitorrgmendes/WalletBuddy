@@ -59,13 +59,13 @@ public class RegisterUserServiceTest
         var mapper = MapperBuilder.Build();
         var unitOfWork = UnitOfWorkBuilder.Build();
         var userRepository = new UserRepositoryBuilder();
-        var passwordEncripter = PasswordEncripterBuilder.Build();
+        var passwordEncrypter = new PasswordEncrypterBuilder().Build();
         var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
 
         if (!string.IsNullOrWhiteSpace(email))
             userRepository.ExistActiveUserWithEmail(email!);
 
-        return new RegisterUser(mapper, passwordEncripter, userRepository.Build(), unitOfWork, accessTokenGenerator);
+        return new RegisterUser(mapper, passwordEncrypter, userRepository.Build(), unitOfWork, accessTokenGenerator);
     }
 
     public static IEnumerable<object[]> GetEmptyData()

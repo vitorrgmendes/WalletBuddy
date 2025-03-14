@@ -10,18 +10,18 @@ namespace WalletBuddy.Application.Services.Auth.Login;
 
 public class LoginUser : ILoginUser
 {
-    private readonly IPasswordEncripter _passwordEncripter;
+    private readonly IPasswordEncrypter _passwordEncrypter;
     private readonly IUserRepository _userRepository;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IUnitOfWork _unitOfWork;
 
     public LoginUser(
-        IPasswordEncripter passwordEncripter, 
+        IPasswordEncrypter passwordEncrypter, 
         IUserRepository userRepository, 
         IAccessTokenGenerator accessTokenGenerator,
         IUnitOfWork unitOfWork)
     {
-        _passwordEncripter = passwordEncripter;
+        _passwordEncrypter = passwordEncrypter;
         _userRepository = userRepository;
         _accessTokenGenerator = accessTokenGenerator;
         _unitOfWork = unitOfWork;
@@ -31,7 +31,7 @@ public class LoginUser : ILoginUser
     {
         var user = await _userRepository.GetUserByEmail(request.Email) ?? throw new InvalidLoginException();
 
-        bool passwordMatch = _passwordEncripter.Verify(request.Password, user.Password);
+        bool passwordMatch = _passwordEncrypter.Verify(request.Password, user.Password);
 
         if (!passwordMatch)
             throw new InvalidLoginException();

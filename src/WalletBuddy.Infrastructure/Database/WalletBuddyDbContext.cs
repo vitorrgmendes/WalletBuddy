@@ -3,7 +3,7 @@ using WalletBuddy.Domain.Entities;
 
 namespace WalletBuddy.Infrastructure.Database;
 
-internal class WalletBuddyDbContext : DbContext
+public class WalletBuddyDbContext : DbContext
 {
     public WalletBuddyDbContext(DbContextOptions options) : base(options) { }
 

@@ -9,6 +9,7 @@ using WalletBuddy.Application;
 using WalletBuddy.Domain.Security.Constants;
 using WalletBuddy.Infrastructure;
 using WalletBuddy.Infrastructure.Migrations;
+using WalletBuddy.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -99,7 +100,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Auto Run Migrations
-await MigrateDatabase();
+if (!builder.Configuration.IsTestEnvironment())
+    await MigrateDatabase();
 
 app.Run();
 
@@ -108,3 +110,5 @@ async Task MigrateDatabase()
     await using var scope = app.Services.CreateAsyncScope();
     await DataBaseMigration.MigrateDatabase(scope.ServiceProvider);
 }
+
+public partial class Program { }
