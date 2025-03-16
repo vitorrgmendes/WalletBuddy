@@ -42,13 +42,13 @@ public class AuthController : ControllerBase
 
     [HttpDelete("Logout")]    
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
     [Authorize]
     public async Task<IActionResult> Logout(
         [FromServices] ILogoutUser service)
-    {        
-        await service.Execute(HttpContext.User.FindFirst(ClaimTypes.Email));
+    {
+        await service.Execute();
         return NoContent();
     }
 }

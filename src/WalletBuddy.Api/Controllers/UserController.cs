@@ -8,6 +8,7 @@ namespace WalletBuddy.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+// [ApiKey]
 public class UserController : ControllerBase
 {
     [HttpPost("Register")]

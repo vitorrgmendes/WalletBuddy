@@ -27,31 +27,30 @@ public class RefreshToken : IRefreshToken
     public async Task<ResponseUserRegisteredJson> Execute(RequestRefreshTokenJson request)
     {
         var principal = _accessTokenGenerator.GetTokenPrincipal(request.AccessToken);
+        var userIdentifier = principal?.FindFirst(ClaimTypes.Sid)?.Value;
 
-        var emailClaim = principal?.FindFirst(ClaimTypes.Email);
-        var email = emailClaim?.Value;
-        if (email is null)
+        if (userIdentifier is null)
             throw new InvalidCredentialsException();
 
-        var user = await _userRepository.GetUserByEmail(email);
+        var user = await _userRepository.GetUserByUserIdentifier(Guid.Parse(userIdentifier));
         if (user is null || 
             user.RefreshToken != request.RefreshToken || 
             user.RefreshTokenExpiration < DateTime.UtcNow
             ) 
-            throw new InvalidCredentialsException();
+            throw new InvalidCredentialsException();        
+
+        user.RefreshToken = _accessTokenGenerator.GenerateRefreshToken();
+        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
+        //user.LastLogin_At = DateTime.UtcNow;
+        _userRepository.Update(user);
+        await _unitOfWork.Commit();
 
         var response = new ResponseUserRegisteredJson
         {
             Name = user.Name,
             Token = _accessTokenGenerator.Generate(user),
-            RefreshToken = _accessTokenGenerator.GenerateRefreshToken()
+            RefreshToken = user.RefreshToken
         };
-
-        user.RefreshToken = response.RefreshToken;
-        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
-        user.LastLogin_At = DateTime.UtcNow;
-        _userRepository.Update(user);
-        await _unitOfWork.Commit();
 
         return response;
     }    

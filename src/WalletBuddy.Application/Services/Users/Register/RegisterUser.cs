@@ -38,25 +38,25 @@ public class RegisterUser : IRegisterUser
     {
         await Validate(request);               
 
-        var user = _mapper.Map<User>(request);
-
-        var response = new ResponseUserRegisteredJson
-        {
-            Name = request.Name,
-            Token = _accessTokenGenerator.Generate(user),
-            RefreshToken = _accessTokenGenerator.GenerateRefreshToken()
-        };
+        var user = _mapper.Map<User>(request);        
 
         user.Password = _passwordEncrypter.Encrypt(request.Password);
         user.UserIdentifier = Guid.NewGuid();
         user.Created_At = DateTime.UtcNow;
         user.Updated_At = DateTime.UtcNow;
-        user.RefreshToken = response.RefreshToken;
+        user.RefreshToken = _accessTokenGenerator.GenerateRefreshToken();
         user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(_accessTokenGenerator.RefreshTokenExpirationDays);
         // user.LastLogin_At = DateTime.UtcNow;
 
         await _userRepository.Register(user);
         await _unitOfWork.Commit();
+
+        var response = new ResponseUserRegisteredJson
+        {
+            Name = request.Name,
+            Token = _accessTokenGenerator.Generate(user),
+            RefreshToken = user.RefreshToken
+        };
 
         return response;
     }

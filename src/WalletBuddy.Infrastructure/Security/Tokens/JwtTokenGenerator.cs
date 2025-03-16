@@ -78,6 +78,6 @@ internal class JwtTokenGenerator : IAccessTokenGenerator
             ValidateAudience = false,
         };
 
-        return new JwtSecurityTokenHandler().ValidateToken(accessToken, validation, out _);
+        try { return new JwtSecurityTokenHandler().ValidateToken(accessToken, validation, out _); } catch { return null; }        
     }
 }

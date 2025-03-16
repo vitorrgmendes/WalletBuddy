@@ -31,12 +31,14 @@ internal class ExpensesRepository : IExpensesRepository
 
     public async Task<Expense?> GetById(long id)
     {
-        return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+        return await _dbContext.Expenses
+            .AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
     }
 
-    public async Task<Expense?> GetByIdForChanges(long id)
+    public async Task<Expense?> GetByIdForChanges(User user, long id)
     {
-        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
+        return await _dbContext.Expenses
+            .FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
 
     public async Task<List<Expense>> GetExpensesByMonth(DateOnly date)

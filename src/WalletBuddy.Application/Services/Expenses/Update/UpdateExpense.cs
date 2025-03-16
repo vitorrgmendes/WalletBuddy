@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using WalletBuddy.Communication.Requests.Expenses;
+using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Expenses;
+using WalletBuddy.Domain.Services.LoggedUser;
 using WalletBuddy.Exception;
 using WalletBuddy.Exception.Exception;
 
@@ -12,19 +14,27 @@ public class UpdateExpense : IUpdateExpense
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IExpensesRepository _repository;
+    private readonly ILoggedUser _loggedUser;
 
-    public UpdateExpense(IUnitOfWork unitOfWork, IMapper mapper, IExpensesRepository repository)
+    public UpdateExpense(
+        IUnitOfWork unitOfWork, 
+        IMapper mapper, 
+        IExpensesRepository repository,
+        ILoggedUser loggedUser)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _repository = repository;
+        _loggedUser = loggedUser;
     }
 
     public async Task Execute(long id, RequestExpenseJson request)
     {
         Validate(request);
 
-        var expense = await _repository.GetByIdForChanges(id);
+        var loggedUser = await _loggedUser.Get();
+
+        var expense = await _repository.GetByIdForChanges(loggedUser, id);
 
         if (expense is null)
             throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);

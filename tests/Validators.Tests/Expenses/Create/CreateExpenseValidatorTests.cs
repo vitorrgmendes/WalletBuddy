@@ -1,4 +1,5 @@
-﻿using CommonUtilities.Test.Requests;
+﻿using CommonUtilities.Test.InlineData;
+using CommonUtilities.Test.Requests;
 using WalletBuddy.Application.Services.Expenses;
 using WalletBuddy.Communication.Enums;
 using WalletBuddy.Exception;
@@ -19,7 +20,7 @@ public class CreateExpenseValidatorTests
     }
 
     [Theory]
-    [MemberData(nameof(GetWrongTitleData))]
+    [ClassData(typeof(EmptyStringInLineDataTest))]
     public void ErrorTitleEmpty(string title)
     {
         var validator = new ExpenseValidator();
@@ -75,12 +76,5 @@ public class CreateExpenseValidatorTests
         Assert.False(result.IsValid);
         Assert.Single(result.Errors);
         Assert.Contains(result.Errors, e => e.ErrorMessage.Equals(ResourceErrorMessages.PRICE_GREATER_THAN_ZERO));
-    }
-
-    public static IEnumerable<object[]> GetWrongTitleData()
-    {
-        yield return new object[] { "" };
-        yield return new object[] { "  " };
-        yield return new object[] { null };
     }
 }

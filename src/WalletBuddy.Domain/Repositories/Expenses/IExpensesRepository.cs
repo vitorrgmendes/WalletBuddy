@@ -17,7 +17,7 @@ public interface IExpensesRepository
 
     void Update(Expense expense);
 
-    Task<Expense?> GetByIdForChanges(long id);
+    Task<Expense?> GetByIdForChanges(User user, long id);
 
     Task<List<Expense>> GetExpensesByMonth(DateOnly date);
 }
