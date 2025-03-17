@@ -6,14 +6,11 @@ public interface IExpensesRepository
 {
     Task Add(Expense expense);
 
-    Task<List<Expense>> GetAll();
+    Task<List<Expense>> GetAll(User user);
 
-    Task<Expense?> GetById(long id);
-    
-    /// <summary>This function deletes an expense by id.</summary>
-    /// <param name="id"></param>
-    /// <returns>Returns TRUE if the deletion was successful, otherwise returns FALSE.</returns>
-    Task<bool> DeleteById(long id);
+    Task<Expense?> GetById(User user, long id);
+
+    Task DeleteById(long id);
 
     void Update(Expense expense);
 

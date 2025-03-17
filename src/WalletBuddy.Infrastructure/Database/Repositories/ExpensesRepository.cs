@@ -18,21 +18,26 @@ internal class ExpensesRepository : IExpensesRepository
         await _dbContext.Expenses.AddAsync(expense);
     }
 
-    public async Task<bool> DeleteById(long id)
+    public async Task DeleteById(long id)
     {
-        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id) is Expense expenseToDelete 
-            && _dbContext.Expenses.Remove(expenseToDelete) is not null;
+        var expense = await _dbContext.Expenses.FindAsync(id);
+
+        _dbContext.Expenses.Remove(expense!);
     }
 
-    public async Task<List<Expense>> GetAll()
-    {
-        return await _dbContext.Expenses.AsNoTracking().ToListAsync();
-    }
-
-    public async Task<Expense?> GetById(long id)
+    public async Task<List<Expense>> GetAll(User user)
     {
         return await _dbContext.Expenses
-            .AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+            .AsNoTracking()
+            .Where(expense => expense.UserId == user.Id)
+            .ToListAsync();
+    }
+
+    public async Task<Expense?> GetById(User user, long id)
+    {
+        return await _dbContext.Expenses
+            .AsNoTracking()
+            .FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
 
     public async Task<Expense?> GetByIdForChanges(User user, long id)
