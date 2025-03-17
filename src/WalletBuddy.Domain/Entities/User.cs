@@ -11,7 +11,7 @@ public class User
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public Guid UserIdentifier { get; set; }
-    public string Role { get; set; } = Roles.TEAM_MEMBER;
+    public string Role { get; set; } = Roles.MEMBER;
     public DateTime Created_At { get; set; }
     public DateTime Updated_At { get; set; }
     public DateTime? Deleted_At { get; set; }
