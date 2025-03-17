@@ -4,27 +4,34 @@ using WalletBuddy.Domain.Enums;
 using WalletBuddy.Domain.Extensions;
 using WalletBuddy.Domain.Reports;
 using WalletBuddy.Domain.Repositories.Expenses;
+using WalletBuddy.Domain.Services.LoggedUser;
 
 namespace WalletBuddy.Application.Services.Expenses.Reports.Excel;
 
 public class GenerateExpensesReportExcel : IGenerateExpensesReportExcel
 {
     private readonly IExpensesRepository _repository;
+    private readonly ILoggedUser _loggedUser;
 
-    public GenerateExpensesReportExcel(IExpensesRepository repository)
+    public GenerateExpensesReportExcel(
+        IExpensesRepository repository,
+        ILoggedUser loggedUser)
     {
         _repository = repository;
+        _loggedUser = loggedUser;
     }
 
     public async Task<byte[]> Execute(DateOnly date)
     {
-        var expenses = await _repository.GetExpensesByMonth(date);
+        var loggedUser = await _loggedUser.Get();
+
+        var expenses = await _repository.GetExpensesByMonth(loggedUser, date);
 
         if (expenses.Count == 0) return [];
 
         using var workbook = new XLWorkbook();
 
-        workbook.Author = "Vitor Mendes";
+        workbook.Author = loggedUser.Name;
         workbook.Style.Font.FontSize = 12;
         workbook.Style.Font.FontName = "Arial";
 

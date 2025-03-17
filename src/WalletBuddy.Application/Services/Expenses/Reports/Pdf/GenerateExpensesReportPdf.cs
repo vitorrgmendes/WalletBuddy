@@ -9,6 +9,7 @@ using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Extensions;
 using WalletBuddy.Domain.Reports;
 using WalletBuddy.Domain.Repositories.Expenses;
+using WalletBuddy.Domain.Services.LoggedUser;
 using Font = MigraDoc.DocumentObjectModel.Font;
 
 namespace WalletBuddy.Application.Services.Expenses.Reports.Pdf;
@@ -16,30 +17,36 @@ namespace WalletBuddy.Application.Services.Expenses.Reports.Pdf;
 public class GenerateExpensesReportPdf : IGenerateExpensesReportPdf
 {
     private readonly IExpensesRepository _repository;
+    private readonly ILoggedUser _loggedUser;
 
     private const string pathLogo = "Services\\Expenses\\Reports\\Pdf\\Logo";
     private const string logoFile = "logo.png";
 
     private const int HEIGHT_ROW_EXPENSE_TABLE = 25;
 
-    public GenerateExpensesReportPdf(IExpensesRepository repository)
+    public GenerateExpensesReportPdf(
+        IExpensesRepository repository,
+        ILoggedUser loggedUser)
     {
         _repository = repository;
+        _loggedUser = loggedUser;
 
         GlobalFontSettings.FontResolver = new ExpensesReportFontResolver();
     }
 
     public async Task<byte[]> Execute(DateOnly date)
     {
-        var expenses = await _repository.GetExpensesByMonth(date);
+        var loggedUser = await _loggedUser.Get();
+
+        var expenses = await _repository.GetExpensesByMonth(loggedUser, date);
 
         if (expenses.Count == 0) return [];
 
-        var document = CreateDocument(date);
+        var document = CreateDocument(loggedUser.Name, date);
         var page = CreatePage(document);
 
         // Header
-        CreateHeader(page);
+        CreateHeader(loggedUser.Name, page);
 
         // Total Value Paragraph
         CreateParagraphTotalValue(page, expenses, date);
@@ -55,11 +62,11 @@ public class GenerateExpensesReportPdf : IGenerateExpensesReportPdf
         return RenderDocument(document);
     }
 
-    private Document CreateDocument(DateOnly date)
+    private Document CreateDocument(string author, DateOnly date)
     { 
         var document = new Document();
         document.Info.Title = $"{ResourceReportMessages.EXPENSES_FOR} {date:Y}";
-        document.Info.Author = "Vitor Mendes";
+        document.Info.Author = author;
 
         var style = document.Styles["Normal"];
         style!.Font.Name = FontHelper.RALEWAY_REGULAR;
@@ -81,7 +88,7 @@ public class GenerateExpensesReportPdf : IGenerateExpensesReportPdf
         return section;
     }
 
-    private void CreateHeader(Section page)
+    private void CreateHeader(string name, Section page)
     {
         var table = page.AddTable();
         table.AddColumn();
@@ -95,7 +102,7 @@ public class GenerateExpensesReportPdf : IGenerateExpensesReportPdf
 
         row.Cells[0].AddImage(pathFile);
 
-        row.Cells[1].AddParagraph("Hey, Vitor Mendes!");
+        row.Cells[1].AddParagraph($"Hey, {name}!");
         row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
         row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
     }
@@ -114,7 +121,7 @@ public class GenerateExpensesReportPdf : IGenerateExpensesReportPdf
         paragraph.AddLineBreak();
 
         var totalExpenses = expenses.Sum(expense => expense.Price);
-        paragraph.AddFormattedText($"{ResourceReportMessages.CURRENCY_SYMBOL} {totalExpenses.ToString()}",
+        paragraph.AddFormattedText($"{ResourceReportMessages.CURRENCY_SYMBOL} {totalExpenses:f2}",
                                     new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
     }
 
@@ -196,7 +203,7 @@ public class GenerateExpensesReportPdf : IGenerateExpensesReportPdf
 
     private void AddExpensePriceInformation(Cell cell, decimal expensePrice)
     {
-        cell.AddParagraph($"- {ResourceReportMessages.CURRENCY_SYMBOL} {expensePrice}");
+        cell.AddParagraph($"- {ResourceReportMessages.CURRENCY_SYMBOL} {expensePrice:f2}");
         cell.Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 14, Color = ColorsHelper.BLACK };
         cell.Shading.Color = ColorsHelper.WHITE;
         cell.VerticalAlignment = VerticalAlignment.Center;

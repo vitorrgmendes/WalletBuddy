@@ -50,7 +50,6 @@ internal class JwtTokenGenerator : IAccessTokenGenerator
         return new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString()),
             new Claim(ClaimTypes.Role, user.Role.ToString())
         };
@@ -78,6 +77,6 @@ internal class JwtTokenGenerator : IAccessTokenGenerator
             ValidateAudience = false,
         };
 
-        return new JwtSecurityTokenHandler().ValidateToken(accessToken, validation, out _);
+        try { return new JwtSecurityTokenHandler().ValidateToken(accessToken, validation, out _); } catch { return null; }        
     }
 }

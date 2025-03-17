@@ -1,4 +1,5 @@
-﻿using CommonUtilities.Test.Requests;
+﻿using CommonUtilities.Test.InlineData;
+using CommonUtilities.Test.Requests;
 using WalletBuddy.Application.Services.Users;
 using WalletBuddy.Exception;
 
@@ -13,11 +14,12 @@ public class RegisterUserValidatorTest
         var request = RequestRegisterUserJsonBuilder.Build();
 
         var result = validator.Validate(request);
+
         Assert.True(result.IsValid);
     }
 
     [Theory]
-    [MemberData(nameof(GetEmptyData))]
+    [ClassData(typeof(EmptyStringInLineDataTest))]
     public void Error_Empty_Name(string name)
     {
         var validator = new RegisterUserValidator();
@@ -32,7 +34,7 @@ public class RegisterUserValidatorTest
     }
 
     [Theory]
-    [MemberData(nameof(GetEmptyData))]
+    [ClassData(typeof(EmptyStringInLineDataTest))]
     public void Error_Empty_Email(string email)
     {
         var validator = new RegisterUserValidator();
@@ -61,7 +63,7 @@ public class RegisterUserValidatorTest
     }
 
     [Theory]
-    [MemberData(nameof(GetEmptyData))]
+    [ClassData(typeof(EmptyStringInLineDataTest))]
     public void Error_Empty_Password(string password)
     {
         var validator = new RegisterUserValidator();
@@ -73,12 +75,5 @@ public class RegisterUserValidatorTest
         Assert.False(result.IsValid);
         Assert.Single(result.Errors);
         Assert.Contains(result.Errors, e => e.ErrorMessage.Equals(ResourceErrorMessages.INVALID_PASSWORD));
-    }
-
-    public static IEnumerable<object[]> GetEmptyData()
-    {
-        yield return new object[] { "" };
-        yield return new object[] { "  " };
-        yield return new object[] { null };
     }
 }

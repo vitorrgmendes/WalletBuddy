@@ -1,4 +1,5 @@
 ﻿using CommonUtilities.Test.Cryptography;
+using CommonUtilities.Test.InlineData;
 using CommonUtilities.Test.Mapper;
 using CommonUtilities.Test.Repositories;
 using CommonUtilities.Test.Requests;
@@ -40,7 +41,7 @@ public class RegisterUserServiceTest
     }
 
     [Xunit.Theory]
-    [MemberData(nameof(GetEmptyData))]
+    [ClassData(typeof(EmptyStringInLineDataTest))]
     public void Error_Invalid_Name(string name)
     {
         var request = RequestRegisterUserJsonBuilder.Build();
@@ -66,12 +67,5 @@ public class RegisterUserServiceTest
             userRepository.ExistActiveUserWithEmail(email!);
 
         return new RegisterUser(mapper, passwordEncrypter, userRepository.Build(), unitOfWork, accessTokenGenerator);
-    }
-
-    public static IEnumerable<object[]> GetEmptyData()
-    {
-        yield return new object[] { "" };
-        yield return new object[] { "  " };
-        yield return new object[] { null };
     }
 }

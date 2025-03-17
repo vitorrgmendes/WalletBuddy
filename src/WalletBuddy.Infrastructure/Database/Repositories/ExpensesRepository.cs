@@ -18,28 +18,35 @@ internal class ExpensesRepository : IExpensesRepository
         await _dbContext.Expenses.AddAsync(expense);
     }
 
-    public async Task<bool> DeleteById(long id)
+    public async Task DeleteById(long id)
     {
-        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id) is Expense expenseToDelete 
-            && _dbContext.Expenses.Remove(expenseToDelete) is not null;
+        var expense = await _dbContext.Expenses.FindAsync(id);
+
+        _dbContext.Expenses.Remove(expense!);
     }
 
-    public async Task<List<Expense>> GetAll()
+    public async Task<List<Expense>> GetAll(User user)
     {
-        return await _dbContext.Expenses.AsNoTracking().ToListAsync();
+        return await _dbContext.Expenses
+            .AsNoTracking()
+            .Where(expense => expense.UserId == user.Id)
+            .ToListAsync();
     }
 
-    public async Task<Expense?> GetById(long id)
+    public async Task<Expense?> GetById(User user, long id)
     {
-        return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+        return await _dbContext.Expenses
+            .AsNoTracking()
+            .FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
 
-    public async Task<Expense?> GetByIdForChanges(long id)
+    public async Task<Expense?> GetByIdForChanges(User user, long id)
     {
-        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
+        return await _dbContext.Expenses
+            .FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
 
-    public async Task<List<Expense>> GetExpensesByMonth(DateOnly date)
+    public async Task<List<Expense>> GetExpensesByMonth(User user, DateOnly date)
     {
         var startDate = new DateTime(year: date.Year, month: date.Month, day: 1, hour: 0, minute: 0, second: 0, kind: DateTimeKind.Utc);
 
@@ -49,7 +56,7 @@ internal class ExpensesRepository : IExpensesRepository
         return await _dbContext
             .Expenses
             .AsNoTracking()
-            .Where(expense => expense.Date >= startDate && expense.Date <= endDate)
+            .Where(expense => expense.UserId == user.Id && expense.Date >= startDate && expense.Date <= endDate)
             .OrderBy(expense => expense.Date)
             .ToListAsync();
     }

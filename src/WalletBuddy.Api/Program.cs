@@ -10,6 +10,8 @@ using WalletBuddy.Domain.Security.Constants;
 using WalletBuddy.Infrastructure;
 using WalletBuddy.Infrastructure.Migrations;
 using WalletBuddy.Infrastructure.Extensions;
+using WalletBuddy.Domain.Security.Tokens;
+using WalletBuddy.Api.Token;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +64,9 @@ builder.Services.AddScoped<ApiKeyAuthFilter>();
 // Dependency Injection
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+builder.Services.AddHttpContextAccessor();
 
 // JWT Authorization
 var signingKey = builder.Configuration.GetValue<string>(SecurityConstants.JWT_SIGNINGKEY_PATH);

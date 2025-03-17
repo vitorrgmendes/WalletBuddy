@@ -8,11 +8,13 @@ using WalletBuddy.Domain.Security.ApiKey;
 using WalletBuddy.Domain.Security.Constants;
 using WalletBuddy.Domain.Security.Cryptography;
 using WalletBuddy.Domain.Security.Tokens;
+using WalletBuddy.Domain.Services.LoggedUser;
 using WalletBuddy.Infrastructure.Database;
 using WalletBuddy.Infrastructure.Database.Repositories;
 using WalletBuddy.Infrastructure.Extensions;
 using WalletBuddy.Infrastructure.Security.ApiKey;
 using WalletBuddy.Infrastructure.Security.Tokens;
+using WalletBuddy.Infrastructure.Services.LoggedUser;
 
 namespace WalletBuddy.Infrastructure;
 
@@ -38,6 +40,7 @@ public static class DependencyInjectionExtension
     private static void AddSecurity(IServiceCollection services)
     {
         services.AddScoped<IPasswordEncrypter, Security.Cryptography.BCrypt>();
+        services.AddScoped<ILoggedUser, LoggedUser>();
     }
 
     private static void AddToken(IServiceCollection services, IConfiguration configuration)
