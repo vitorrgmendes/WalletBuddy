@@ -42,14 +42,28 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
     private void StartDatabase(WalletBuddyDbContext dbContext, IPasswordEncrypter passwordEncrypter)
     {
+        AddUsers(dbContext, passwordEncrypter);
+        AddExpenses(dbContext, _user);
+
+        dbContext.SaveChanges();
+    }
+
+    private void AddUsers(WalletBuddyDbContext dbContext, IPasswordEncrypter passwordEncrypter)
+    {
         _user = UserBuilder.Build();
+
         _password = _user.Password;
         _user.Password = passwordEncrypter.Encrypt(_password);
 
         dbContext.Users.Add(_user);
-
-        dbContext.SaveChanges();
     }
+
+    private void AddExpenses(WalletBuddyDbContext dbContext, User user)
+    {
+        var expense = ExpenseBuilder.Build(user);
+
+        dbContext.Expenses.Add(expense);
+    }    
 
     public string GetEmail() => _user.Email;
     public string GetName() => _user.Name;
