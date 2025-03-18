@@ -29,4 +29,12 @@ public class GetAllExpensesTest : WalletBuddyClassFixture
 
         Assert.True(expenses.Any());
     }
+
+    [Fact]
+    public async Task Unauthorized()
+    {
+        var result = await DoGet(requestUri: URI, token: "");
+
+        Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
+    }
 }

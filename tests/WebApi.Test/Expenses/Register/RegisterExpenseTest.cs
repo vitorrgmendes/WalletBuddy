@@ -31,17 +31,7 @@ public class RegisterExpenseTest : WalletBuddyClassFixture
         var response = await JsonDocument.ParseAsync(body);
 
         Assert.Equal(request.Title, response.RootElement.GetProperty("title").GetString());
-    }
-
-    [Fact]
-    public async Task Unauthorized()
-    {
-        var request = RequestExpenseCreateJsonBuilder.Build();
-
-        var result = await DoPost(requestUri: URI, request: request);
-
-        Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
-    }
+    }    
 
     [Theory]
     [ClassData(typeof(CultureInlineDataTest))]
@@ -62,5 +52,15 @@ public class RegisterExpenseTest : WalletBuddyClassFixture
 
         Assert.Single(errors);
         Assert.Contains(errors, error => error.GetString()!.Equals(expectedMessage));
+    }
+
+    [Fact]
+    public async Task Unauthorized()
+    {
+        var request = RequestExpenseCreateJsonBuilder.Build();
+
+        var result = await DoPost(requestUri: URI, request: request);
+
+        Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
     }
 }
