@@ -15,7 +15,7 @@ public class RegisterExpenseTest : WalletBuddyClassFixture
 
     public RegisterExpenseTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-        _token = webApplicationFactory.GetToken();
+        _token = webApplicationFactory.User_Member.GetToken();
     }
 
     [Fact]

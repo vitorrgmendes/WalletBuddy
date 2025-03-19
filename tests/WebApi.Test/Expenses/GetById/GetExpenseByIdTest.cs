@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Net;
 using System.Text.Json;
 using WalletBuddy.Communication.Enums;
-using WalletBuddy.Domain.Entities;
 using WalletBuddy.Exception;
 
 namespace WebApi.Test.Expenses.GetById;
@@ -17,8 +16,8 @@ public class GetExpenseByIdTest : WalletBuddyClassFixture
 
     public GetExpenseByIdTest(CustomWebApplicationFactory customWebApplicationFactory) : base(customWebApplicationFactory)
     { 
-        _token = customWebApplicationFactory.GetToken();
-        _expenseId = customWebApplicationFactory.GetExpenseId();
+        _token = customWebApplicationFactory.User_Member.GetToken();
+        _expenseId = customWebApplicationFactory.Expense.GetId();
     }
 
     [Fact]

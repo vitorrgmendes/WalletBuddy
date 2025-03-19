@@ -18,9 +18,9 @@ public class LoginTest : WalletBuddyClassFixture
 
     public LoginTest(CustomWebApplicationFactory customWebApplicationFactory) : base(customWebApplicationFactory)
     {
-        _email = customWebApplicationFactory.GetEmail();
-        _name = customWebApplicationFactory.GetName();
-        _password = customWebApplicationFactory.GetPassword();
+        _email = customWebApplicationFactory.User_Member.GetEmail();
+        _name = customWebApplicationFactory.User_Member.GetName();
+        _password = customWebApplicationFactory.User_Member.GetPassword();
     }
 
     [Fact]

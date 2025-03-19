@@ -5,7 +5,7 @@ using System.Net;
 using System.Text.Json;
 using WalletBuddy.Exception;
 
-namespace WebApi.Test.Users;
+namespace WebApi.Test.Users.Register;
 
 public class RegisterUserTest : WalletBuddyClassFixture
 {
