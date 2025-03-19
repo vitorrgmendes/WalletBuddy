@@ -2,20 +2,19 @@
 using System.Globalization;
 using System.Net;
 using System.Text.Json;
-using WalletBuddy.Communication.Enums;
 using WalletBuddy.Exception;
 
-namespace WebApi.Test.Expenses.GetById;
+namespace WebApi.Test.Expenses.Delete;
 
-public class GetExpenseByIdTest : WalletBuddyClassFixture
+public class DeleteExpenseTest : WalletBuddyClassFixture
 {
     private const string URI = "api/expenses";
 
     private readonly string _token;
     private readonly long _expenseId;
 
-    public GetExpenseByIdTest(CustomWebApplicationFactory customWebApplicationFactory) : base(customWebApplicationFactory)
-    { 
+    public DeleteExpenseTest(CustomWebApplicationFactory customWebApplicationFactory) : base(customWebApplicationFactory)
+    {
         _token = customWebApplicationFactory.User_Member.GetToken();
         _expenseId = customWebApplicationFactory.Expense.GetId();
     }
@@ -23,20 +22,13 @@ public class GetExpenseByIdTest : WalletBuddyClassFixture
     [Fact]
     public async Task Success()
     {
-        var result = await DoGet(requestUri: $"{URI}/{_expenseId}", token: _token);
+        var result = await DoDelete(requestUri: $"{URI}/{_expenseId}", token: _token);
 
-        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
 
-        var body = await result.Content.ReadAsStreamAsync();
+        result = await DoGet(requestUri: $"{URI}/{_expenseId}", token: _token);
 
-        var response = await JsonDocument.ParseAsync(body);
-
-        Assert.Equal(_expenseId, response.RootElement.GetProperty("id").GetInt64());
-        Assert.False(string.IsNullOrWhiteSpace(response.RootElement.GetProperty("title").GetString()));
-        Assert.False(string.IsNullOrWhiteSpace(response.RootElement.GetProperty("description").GetString()));
-        Assert.True(response.RootElement.GetProperty("date").GetDateTime() <= DateTime.Today);
-        Assert.True(response.RootElement.GetProperty("price").GetDecimal() > 0);
-        Assert.True(Enum.IsDefined(typeof(PaymentType), response.RootElement.GetProperty("paymentType").GetInt32()));
+        Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
     }
 
     [Theory]
