@@ -2,30 +2,24 @@
 using CommonUtilities.Test.Requests;
 using System.Globalization;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text.Json;
 using WalletBuddy.Exception;
 
-namespace WebApi.Test.Users;
+namespace WebApi.Test.Users.Register;
 
-public class RegisterUserTest : IClassFixture<CustomWebApplicationFactory>
+public class RegisterUserTest : WalletBuddyClassFixture
 {
     private const string URI = "api/user/register";
 
-    private readonly HttpClient _httpClient;
-
-    public RegisterUserTest(CustomWebApplicationFactory webApplicationFactory)
-    {
-        _httpClient = webApplicationFactory.CreateClient();
-    }
+    public RegisterUserTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    { }
 
     [Fact]
     public async Task Success()
     {
-        var request = RequestRegisterUserJsonBuilder.Build();        
+        var request = RequestRegisterUserJsonBuilder.Build();
 
-        var result = await _httpClient.PostAsJsonAsync(URI, request);
+        var result = await DoPost(requestUri:URI, request: request);
 
         Assert.Equal(HttpStatusCode.Created, result.StatusCode);
 
@@ -45,8 +39,7 @@ public class RegisterUserTest : IClassFixture<CustomWebApplicationFactory>
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Name = string.Empty;
 
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(culture));
-        var result = await _httpClient.PostAsJsonAsync(URI, request);
+        var result = await DoPost(requestUri: URI, request: request, culture: culture);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
 

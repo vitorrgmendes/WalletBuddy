@@ -2,29 +2,25 @@
 using CommonUtilities.Test.Requests;
 using System.Globalization;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text.Json;
 using WalletBuddy.Communication.Requests.Login;
 using WalletBuddy.Exception;
 
-namespace WebApi.Test.Auth;
+namespace WebApi.Test.Auth.Login;
 
-public class LoginTest : IClassFixture<CustomWebApplicationFactory>
+public class LoginTest : WalletBuddyClassFixture
 {
     private const string URI = "api/auth/login";
 
-    private readonly HttpClient _httpClient;
     private readonly string _email;
     private readonly string _name;
     private readonly string _password;
 
-    public LoginTest(CustomWebApplicationFactory customWebApplicationFactory)
+    public LoginTest(CustomWebApplicationFactory customWebApplicationFactory) : base(customWebApplicationFactory)
     {
-        _httpClient = customWebApplicationFactory.CreateClient();
-        _email = customWebApplicationFactory.GetEmail();
-        _name = customWebApplicationFactory.GetName();
-        _password = customWebApplicationFactory.GetPassword();
+        _email = customWebApplicationFactory.User_Member.GetEmail();
+        _name = customWebApplicationFactory.User_Member.GetName();
+        _password = customWebApplicationFactory.User_Member.GetPassword();
     }
 
     [Fact]
@@ -36,7 +32,7 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory>
             Password = _password
         };
 
-        var result = await _httpClient.PostAsJsonAsync(URI, request);
+        var result = await DoPost(requestUri: URI, request: request);
 
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
@@ -54,8 +50,7 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory>
     {
         var request = RequestUserLoginJsonBuilder.Build();
 
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(culture));
-        var result = await _httpClient.PostAsJsonAsync(URI, request);
+        var result = await DoPost(requestUri: URI, request: request, culture: culture);
 
         Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
 

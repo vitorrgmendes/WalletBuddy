@@ -8,7 +8,7 @@ using WalletBuddy.Domain.Enums;
 
 namespace WalletBuddy.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/expenses/[controller]")]
     [ApiController]
     [Authorize(Roles = Roles.ADMIN)]
     public class ReportController : ControllerBase
@@ -19,7 +19,9 @@ namespace WalletBuddy.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetExcel([FromServices] IGenerateExpensesReportExcel service, [FromQuery] DateOnly date)
+        public async Task<IActionResult> GetExcel(
+            [FromServices] IGenerateExpensesReportExcel service, 
+            [FromQuery] DateOnly date)
         {
             var file = await service.Execute(date);
 
@@ -35,7 +37,9 @@ namespace WalletBuddy.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetPdf([FromServices] IGenerateExpensesReportPdf service, [FromQuery] DateOnly date)
+        public async Task<IActionResult> GetPdf(
+            [FromServices] IGenerateExpensesReportPdf service, 
+            [FromQuery] DateOnly date)
         {
             var file = await service.Execute(date);
             
