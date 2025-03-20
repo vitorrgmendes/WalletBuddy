@@ -25,7 +25,7 @@ public class UpdateExpenseTest : WalletBuddyClassFixture
     {
         var request = RequestExpenseJsonBuilder.Build();
 
-        var response = await DoUpdate(requestUri: $"{URI}/{_expenseId}",
+        var response = await DoPut(requestUri: $"{URI}/{_expenseId}",
                                       request: request,
                                       token: _token);
 
@@ -39,7 +39,7 @@ public class UpdateExpenseTest : WalletBuddyClassFixture
         var request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
-        var result = await DoUpdate(requestUri: $"{URI}/{_expenseId}",
+        var result = await DoPut(requestUri: $"{URI}/{_expenseId}",
                                     request: request,
                                     token: _token,
                                     culture: culture);
@@ -62,7 +62,7 @@ public class UpdateExpenseTest : WalletBuddyClassFixture
     {
         var request = RequestExpenseJsonBuilder.Build();
 
-        var result = await DoUpdate(requestUri: $"{URI}/777",
+        var result = await DoPut(requestUri: $"{URI}/777",
                                     request: request,
                                     token: _token,
                                     culture: culture);
@@ -84,7 +84,7 @@ public class UpdateExpenseTest : WalletBuddyClassFixture
     {
         var request = RequestExpenseJsonBuilder.Build();
 
-        var result = await DoUpdate(requestUri: $"{URI}/{_expenseId}",
+        var result = await DoPut(requestUri: $"{URI}/{_expenseId}",
                                     request: request,
                                     token: "");
 

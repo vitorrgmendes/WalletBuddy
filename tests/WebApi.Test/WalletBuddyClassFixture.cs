@@ -24,7 +24,7 @@ public class WalletBuddyClassFixture : IClassFixture<CustomWebApplicationFactory
         return await _httpClient.PostAsJsonAsync(requestUri, request);
     }
 
-    protected async Task<HttpResponseMessage> DoUpdate(
+    protected async Task<HttpResponseMessage> DoPut(
         string requestUri,
         object request,
         string token,
