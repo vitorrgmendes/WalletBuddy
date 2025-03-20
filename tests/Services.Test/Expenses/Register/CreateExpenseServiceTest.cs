@@ -16,7 +16,7 @@ public class CreateExpenseServiceTest
     public async Task Success()
     {
         var loggedUser = UserBuilder.Build();
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         var service = CreateService(loggedUser);
 
         var result = await service.Execute(request);
@@ -29,7 +29,7 @@ public class CreateExpenseServiceTest
     public async Task Error_Empty_Title()
     {
         var loggedUser = UserBuilder.Build();
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
         var service = CreateService(loggedUser);

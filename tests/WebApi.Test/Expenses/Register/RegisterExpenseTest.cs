@@ -21,7 +21,7 @@ public class RegisterExpenseTest : WalletBuddyClassFixture
     [Fact]
     public async Task Success()
     {
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         
         var result = await DoPost(requestUri: URI, request: request, token: _token);
 
@@ -37,7 +37,7 @@ public class RegisterExpenseTest : WalletBuddyClassFixture
     [ClassData(typeof(CultureInlineDataTest))]
     public async Task Error_Empty_Title(string culture)
     {
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
         var result = await DoPost(requestUri: URI, request: request, token: _token, culture: culture);
@@ -57,7 +57,7 @@ public class RegisterExpenseTest : WalletBuddyClassFixture
     [Fact]
     public async Task Unauthorized()
     {
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
 
         var result = await DoPost(requestUri: URI, request: request);
 

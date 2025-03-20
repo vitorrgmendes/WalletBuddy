@@ -28,5 +28,13 @@ public class ExpenseRepositoryBuilder
         return this;
     }
 
+    public ExpenseRepositoryBuilder GetByIdForChanges(User user, Expense? expense)
+    {
+        if (expense is not null)
+            _repository.Setup(repository => repository.GetByIdForChanges(user, expense.Id)).ReturnsAsync(expense);
+
+        return this;
+    }
+
     public IExpensesRepository Build() => _repository.Object;
 }

@@ -4,7 +4,7 @@ using WalletBuddy.Communication.Requests.Expenses;
 
 namespace CommonUtilities.Test.Requests;
 
-public class RequestExpenseCreateJsonBuilder
+public class RequestExpenseJsonBuilder
 {
     public static RequestExpenseJson Build()
     {

@@ -12,7 +12,7 @@ public class CreateExpenseValidatorTests
     public void Success()
     {
         var validator = new ExpenseValidator();
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
 
         var result = validator.Validate(request);
 
@@ -24,7 +24,7 @@ public class CreateExpenseValidatorTests
     public void ErrorTitleEmpty(string title)
     {
         var validator = new ExpenseValidator();
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Title = title;
 
         var result = validator.Validate(request);
@@ -38,7 +38,7 @@ public class CreateExpenseValidatorTests
     public void ErrorDateFuture()
     {
         var validator = new ExpenseValidator();
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Date = DateTime.UtcNow.AddDays(1);
 
         var result = validator.Validate(request);
@@ -52,7 +52,7 @@ public class CreateExpenseValidatorTests
     public void ErrorPaymentTypeInvalid()
     {
         var validator = new ExpenseValidator();
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.PaymentType = (PaymentType)55;
 
         var result = validator.Validate(request);
@@ -68,7 +68,7 @@ public class CreateExpenseValidatorTests
     public void ErrorPriceInvalid(decimal price)
     {
         var validator = new ExpenseValidator();
-        var request = RequestExpenseCreateJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Price = price;
 
         var result = validator.Validate(request);
