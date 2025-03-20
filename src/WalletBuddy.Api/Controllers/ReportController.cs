@@ -8,7 +8,7 @@ using WalletBuddy.Domain.Enums;
 
 namespace WalletBuddy.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/expenses/[controller]")]
     [ApiController]
     [Authorize(Roles = Roles.ADMIN)]
     public class ReportController : ControllerBase
