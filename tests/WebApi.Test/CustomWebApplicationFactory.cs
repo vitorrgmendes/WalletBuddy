@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WalletBuddy.Domain.Entities;
+using WalletBuddy.Domain.Enums;
 using WalletBuddy.Domain.Security.Cryptography;
 using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Infrastructure.Database;
@@ -15,7 +16,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     public UserIdentityManager User_Member { get; private set; } = default!;
     public UserIdentityManager User_Admin { get; private set; } = default!;
-    public ExpenseIdentityManager Expense { get; private set; } = default!;
+    public ExpenseIdentityManager Expense_Member { get; private set; } = default!;
+    public ExpenseIdentityManager Expense_Admin { get; private set; } = default!;
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -44,8 +46,13 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         IPasswordEncrypter passwordEncrypter, 
         IAccessTokenGenerator tokenGenerator)
     {
-        var memberUser = AddMemberUser(dbContext, passwordEncrypter, tokenGenerator);
-        AddExpenses(dbContext, memberUser);
+        var userMember = AddMemberUser(dbContext, passwordEncrypter, tokenGenerator);
+        var expense = AddExpenses(dbContext, userMember, expenseId: 1);
+        Expense_Member = new ExpenseIdentityManager(expense);
+
+        var userAdmin = AddAdminUser(dbContext, passwordEncrypter, tokenGenerator);
+        expense = AddExpenses(dbContext, userAdmin, expenseId: 2);
+        Expense_Admin = new ExpenseIdentityManager(expense);
 
         dbContext.SaveChanges();
     }
@@ -69,12 +76,32 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         return user;
     }
 
-    private void AddExpenses(WalletBuddyDbContext dbContext, User user)
+    private User AddAdminUser(
+        WalletBuddyDbContext dbContext,
+        IPasswordEncrypter passwordEncrypter,
+        IAccessTokenGenerator tokenGenerator)
+    {
+        var user = UserBuilder.Build(role: Roles.ADMIN, id: 2);
+
+        var password = user.Password;
+        user.Password = passwordEncrypter.Encrypt(password);
+
+        dbContext.Users.Add(user);
+
+        var token = tokenGenerator.Generate(user);
+
+        User_Admin = new UserIdentityManager(user, password, token);
+
+        return user;
+    }
+
+    private Expense AddExpenses(WalletBuddyDbContext dbContext, User user, long expenseId)
     {
         var expense = ExpenseBuilder.Build(user);
+        expense.Id = expenseId;
 
         dbContext.Expenses.Add(expense);
 
-        Expense = new ExpenseIdentityManager(expense);
+        return expense;
     }
 }

@@ -17,7 +17,7 @@ public class UpdateExpenseTest : WalletBuddyClassFixture
     public UpdateExpenseTest(CustomWebApplicationFactory customWebApplicationFactory) : base(customWebApplicationFactory)
     {
         _token = customWebApplicationFactory.User_Member.GetToken();
-        _expenseId = customWebApplicationFactory.Expense.GetId();
+        _expenseId = customWebApplicationFactory.Expense_Member.GetId();
     }
 
     [Fact]

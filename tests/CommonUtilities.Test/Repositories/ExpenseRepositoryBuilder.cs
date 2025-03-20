@@ -36,5 +36,12 @@ public class ExpenseRepositoryBuilder
         return this;
     }
 
+    public ExpenseRepositoryBuilder GetExpensesByMonth(User user, List<Expense> expenses)
+    {
+        _repository.Setup(repository => repository.GetExpensesByMonth(user, It.IsAny<DateOnly>())).ReturnsAsync(expenses);
+
+        return this;
+    }
+
     public IExpensesRepository Build() => _repository.Object;
 }
