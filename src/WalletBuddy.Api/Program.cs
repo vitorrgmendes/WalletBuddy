@@ -12,6 +12,7 @@ using WalletBuddy.Infrastructure.Migrations;
 using WalletBuddy.Infrastructure.Extensions;
 using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Api.Token;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,15 +57,18 @@ builder.Services.AddSwaggerGen(config =>
     });
 });
 
-// Exceptions Filter
+// Exceptions & API Key Filter
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
-// API Key Filter
 builder.Services.AddScoped<ApiKeyAuthFilter>();
 
 // Dependency Injection
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
+// Serilog Logging
+builder.Host.UseSerilog();
+
+// Token Provider
 builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 builder.Services.AddHttpContextAccessor();
 
@@ -102,18 +106,45 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Serilog Requests Middleware
+app.UseSerilogRequestLogging(options =>
+{
+    options.GetLevel = (httpContext, elapsed, ex) =>
+    {
+        if (ex != null || elapsed > 500)
+            return Serilog.Events.LogEventLevel.Warning;
+
+        return Serilog.Events.LogEventLevel.Information;
+    };
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+        diagnosticContext.Set("RequestPath", httpContext.Request.Path);
+    };
+});
+
 app.MapControllers();
 
 // Auto Run Migrations
 if (!builder.Configuration.IsTestEnvironment())
     await MigrateDatabase();
 
+Log.Information("Application running.");
 app.Run();
 
 async Task MigrateDatabase()
 {
-    await using var scope = app.Services.CreateAsyncScope();
-    await DataBaseMigration.MigrateDatabase(scope.ServiceProvider);
+    try
+    {
+        Log.Information("Starting database migration...");
+        await using var scope = app.Services.CreateAsyncScope();
+        await DataBaseMigration.MigrateDatabase(scope.ServiceProvider);
+        Log.Information("Database migration completed.");
+    }
+    catch (Exception ex)
+    {
+        Log.Fatal(ex, "An error occurred while migrating the database.");
+    }
 }
 
 public partial class Program { }

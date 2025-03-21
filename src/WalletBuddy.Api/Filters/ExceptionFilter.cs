@@ -30,10 +30,22 @@ public class ExceptionFilter : IExceptionFilter
 
     private void ThrowUnknowError(ExceptionContext context)
     {
-        //var errorResponse = new ResponseErrorJson(context.Exception.Message);
-        var errorResponse = new ResponseErrorJson("Unknow Server Error.");
+        ShowExceptionLog(context);
 
+        var errorResponse = new ResponseErrorJson("Unknow Server Error.");
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(errorResponse);
+    }
+
+    private void ShowExceptionLog(ExceptionContext context)
+    {
+        var errorMessage = context.Exception?.Message ?? "An unknown error occurred.";
+        var stackTrace = context.Exception?.StackTrace ?? "No stack trace available.";
+
+        var logger = context.HttpContext.RequestServices.GetService<ILogger<ExceptionFilter>>();
+        logger?.LogError("Unhandled exception occurred: {ErrorMessage}. Stack Trace: {StackTrace}. Request Path: {RequestPath}",
+            errorMessage,
+            stackTrace,
+            context.HttpContext.Request.Path);
     }
 }
