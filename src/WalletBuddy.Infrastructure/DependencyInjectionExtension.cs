@@ -22,6 +22,8 @@ public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        //AddLogging(services, configuration);
+
         AddSecurity(services);
         AddToken(services, configuration);
         AddApiKey(services, configuration);
@@ -29,6 +31,10 @@ public static class DependencyInjectionExtension
 
         if (!configuration.IsTestEnvironment())
             AddDbContext(services, configuration);
+    }
+
+    private static void AddLogging(IServiceCollection services, IConfiguration configuration)
+    {
     }
 
     private static void AddApiKey(IServiceCollection services, IConfiguration configuration)
@@ -60,9 +66,11 @@ public static class DependencyInjectionExtension
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
-    {        
+    {
         var connectionString = configuration.GetConnectionString("Connection");
-        services.AddDbContext<WalletBuddyDbContext>(config => config.UseNpgsql(connectionString)
-        .UseLowerCaseNamingConvention());
+
+        services.AddDbContext<WalletBuddyDbContext>(options =>
+        options.UseNpgsql(connectionString)
+               .UseLowerCaseNamingConvention());
     }
 }

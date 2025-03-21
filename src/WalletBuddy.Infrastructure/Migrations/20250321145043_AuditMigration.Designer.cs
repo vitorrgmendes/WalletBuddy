@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WalletBuddy.Infrastructure.Database;
@@ -11,9 +12,11 @@ using WalletBuddy.Infrastructure.Database;
 namespace WalletBuddy.Infrastructure.Migrations
 {
     [DbContext(typeof(WalletBuddyDbContext))]
-    partial class WalletBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250321145043_AuditMigration")]
+    partial class AuditMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,6 @@ namespace WalletBuddy.Infrastructure.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Changes")
-                        .HasColumnType("text")
-                        .HasColumnName("changes");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone")
@@ -57,7 +56,7 @@ namespace WalletBuddy.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("operation");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint")
                         .HasColumnName("userid");
 
