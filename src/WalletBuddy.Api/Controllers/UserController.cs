@@ -25,7 +25,7 @@ public class UserController : ControllerBase
         return Created(string.Empty, response);
     }
 
-    [HttpGet]
+    [HttpGet("Profile")]
     [ProducesResponseType(typeof(ResponseUserProfileJson), StatusCodes.Status200OK)]
     [Authorize]
     public async Task<IActionResult> GetUserProfile([FromServices] IGetUserProfile service)

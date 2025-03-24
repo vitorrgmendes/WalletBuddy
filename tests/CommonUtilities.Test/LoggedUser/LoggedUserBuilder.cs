@@ -11,6 +11,7 @@ public class LoggedUserBuilder
         var mock = new Mock<ILoggedUser>();
 
         mock.Setup(loggedUser => loggedUser.Get()).ReturnsAsync(user);
+        mock.Setup(loggedUser => loggedUser.GetForChanges()).ReturnsAsync(user);
 
         return mock.Object;
     }
