@@ -5,5 +5,5 @@ namespace WalletBuddy.Application.Services.Auth.Login;
 
 public interface ILoginUser
 {
-    Task<ResponseUserRegisteredJson> Execute(RequestLoginJson request);
+    Task<ResponseUserLoggedJson> Execute(RequestLoginJson request);
 }

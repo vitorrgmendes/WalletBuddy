@@ -5,5 +5,5 @@ namespace WalletBuddy.Application.Services.Auth.RefreshToken;
 
 public interface IRefreshToken
 {
-    Task<ResponseUserRegisteredJson> Execute(RequestRefreshTokenJson request);
+    Task<ResponseUserLoggedJson> Execute(RequestRefreshTokenJson request);
 }

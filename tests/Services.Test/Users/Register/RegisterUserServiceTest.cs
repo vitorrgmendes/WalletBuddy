@@ -24,8 +24,6 @@ public class RegisterUserServiceTest
 
         _NUnit.Assert.That(result, Is.Not.Null);
         _NUnit.Assert.That(result.Name, Is.EqualTo(request.Name));
-        _NUnit.Assert.That(result.Token, Is.Not.Null.And.Not.Empty);
-        _NUnit.Assert.That(result.RefreshToken, Is.Not.Null.And.Not.Empty);
     }
 
     [Fact]

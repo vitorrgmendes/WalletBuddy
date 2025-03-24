@@ -28,8 +28,6 @@ public class RegisterUserTest : WalletBuddyClassFixture
         //var response = await result.Content.ReadFromJsonAsync<ResponseUserRegisteredJson>();
 
         Assert.Equal(request.Name, response.RootElement.GetProperty("name").GetString());
-        Assert.False(string.IsNullOrWhiteSpace(response.RootElement.GetProperty("token").GetString()));
-        Assert.False(string.IsNullOrWhiteSpace(response.RootElement.GetProperty("refreshToken").GetString()));
     }
 
     [Theory]

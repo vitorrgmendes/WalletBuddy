@@ -18,7 +18,6 @@ public class RegisterUser : IRegisterUser
     private readonly IPasswordEncrypter _passwordEncrypter;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public RegisterUser(
         IMapper mapper, 
@@ -31,7 +30,6 @@ public class RegisterUser : IRegisterUser
         _passwordEncrypter = passwordEncrypter;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
-        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<ResponseUserRegisteredJson> Execute(RequestUserJson request)
@@ -44,9 +42,6 @@ public class RegisterUser : IRegisterUser
         user.UserIdentifier = Guid.NewGuid();
         user.Created_At = DateTime.UtcNow;
         user.Updated_At = DateTime.UtcNow;
-        user.RefreshToken = _accessTokenGenerator.GenerateRefreshToken();
-        user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(_accessTokenGenerator.RefreshTokenExpirationDays);
-        // user.LastLogin_At = DateTime.UtcNow;
 
         await _userRepository.Register(user);
         await _unitOfWork.Commit();
@@ -54,8 +49,6 @@ public class RegisterUser : IRegisterUser
         var response = new ResponseUserRegisteredJson
         {
             Name = request.Name,
-            Token = _accessTokenGenerator.Generate(user),
-            RefreshToken = user.RefreshToken
         };
 
         return response;

@@ -10,6 +10,7 @@ using WalletBuddy.Application.Services.Expenses.GetById;
 using WalletBuddy.Application.Services.Expenses.Reports.Excel;
 using WalletBuddy.Application.Services.Expenses.Reports.Pdf;
 using WalletBuddy.Application.Services.Expenses.Update;
+using WalletBuddy.Application.Services.Users.GetProfile;
 using WalletBuddy.Application.Services.Users.Register;
 
 namespace WalletBuddy.Application;
@@ -28,6 +29,26 @@ public static class DependencyInjectionExtension
     }
 
     private static void AddServices(IServiceCollection services)
+    {        
+        AddAuthServices(services);
+        AddUsersServices(services);
+        AddExpensesServices(services);        
+    }    
+
+    private static void AddUsersServices(IServiceCollection services)
+    {
+        services.AddScoped<IRegisterUser, RegisterUser>();
+        services.AddScoped<IGetUserProfile, GetUserProfile>();
+    }
+
+    private static void AddAuthServices(IServiceCollection services)
+    {
+        services.AddScoped<ILoginUser, LoginUser>();
+        services.AddScoped<IRefreshToken, RefreshToken>();
+        services.AddScoped<ILogoutUser, LogoutUser>();
+    }
+
+    private static void AddExpensesServices(IServiceCollection services)
     {
         services.AddScoped<ICreateExpense, CreateExpense>();
         services.AddScoped<IGetAllExpenses, GetAllExpenses>();
@@ -36,9 +57,5 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUpdateExpense, UpdateExpense>();
         services.AddScoped<IGenerateExpensesReportExcel, GenerateExpensesReportExcel>();
         services.AddScoped<IGenerateExpensesReportPdf, GenerateExpensesReportPdf>();
-        services.AddScoped<IRegisterUser, RegisterUser>();
-        services.AddScoped<ILoginUser, LoginUser>();
-        services.AddScoped<IRefreshToken, RefreshToken>();
-        services.AddScoped<ILogoutUser, LogoutUser>();
     }
 }

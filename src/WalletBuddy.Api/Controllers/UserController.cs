@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WalletBuddy.Application.Services.Users.GetProfile;
 using WalletBuddy.Application.Services.Users.Register;
 using WalletBuddy.Communication.Requests.Users;
 using WalletBuddy.Communication.Responses.Error;
@@ -22,4 +24,14 @@ public class UserController : ControllerBase
         var response = await service.Execute(request);
         return Created(string.Empty, response);
     }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ResponseUserProfileJson), StatusCodes.Status200OK)]
+    [Authorize]
+    public async Task<IActionResult> GetUserProfile([FromServices] IGetUserProfile service)
+    {
+        var response = await service.Execute();
+        return Ok(response);
+    }
+
 }
