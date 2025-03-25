@@ -12,9 +12,9 @@ public class PasswordValidatorTest
     [MemberData(nameof(GetWrongPasswordData))]
     public void Error_Invalid_Password(string password)
     {
-        var validator = new PasswordValidator<RequestUserJson>();
+        var validator = new PasswordValidator<RequestRegisterUserJson>();
 
-        var result = validator.IsValid(new ValidationContext<RequestUserJson>(new RequestUserJson()), password);
+        var result = validator.IsValid(new ValidationContext<RequestRegisterUserJson>(new RequestRegisterUserJson()), password);
 
         Assert.False(result);
     }

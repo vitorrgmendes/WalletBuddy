@@ -20,6 +20,11 @@ internal class UserRepository : IUserRepository
         return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email));
     }
 
+    public async Task<User> GetUserById(long id)
+    {
+        return await _dbContext.Users.FirstAsync(user => user.Id == id);
+    }
+
     public async Task Register(User user)
     {
         await _dbContext.Users.AddAsync(user);

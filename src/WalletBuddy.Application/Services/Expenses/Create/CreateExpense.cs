@@ -36,7 +36,7 @@ public class CreateExpense : ICreateExpense
         var expense = _mapper.Map<Expense>(request);
         expense.UserId = loggedUser.Id;
         expense.CreatedAt = DateTime.UtcNow;
-        expense.UpdatedAt = DateTime.UtcNow;
+        expense.UpdatedAt = expense.CreatedAt;
 
         await _repository.Add(expense);
         await _unitOfWork.Commit();

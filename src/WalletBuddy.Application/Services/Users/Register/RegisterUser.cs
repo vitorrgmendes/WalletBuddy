@@ -32,7 +32,7 @@ public class RegisterUser : IRegisterUser
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ResponseUserRegisteredJson> Execute(RequestUserJson request)
+    public async Task<ResponseUserRegisteredJson> Execute(RequestRegisterUserJson request)
     {
         await Validate(request);               
 
@@ -41,7 +41,7 @@ public class RegisterUser : IRegisterUser
         user.Password = _passwordEncrypter.Encrypt(request.Password);
         user.UserIdentifier = Guid.NewGuid();
         user.Created_At = DateTime.UtcNow;
-        user.Updated_At = DateTime.UtcNow;
+        user.Updated_At = user.Created_At;
 
         await _userRepository.Register(user);
         await _unitOfWork.Commit();
@@ -54,7 +54,7 @@ public class RegisterUser : IRegisterUser
         return response;
     }
 
-    private async Task Validate(RequestUserJson request)
+    private async Task Validate(RequestRegisterUserJson request)
     { 
         var result = new RegisterUserValidator().Validate(request);
 
