@@ -1,17 +1,17 @@
 ﻿using CommonUtilities.Test.InlineData;
 using CommonUtilities.Test.Requests;
-using WalletBuddy.Application.Services.Users.Register;
+using WalletBuddy.Application.Services.Users.Update;
 using WalletBuddy.Exception;
 
-namespace Validators.Tests.Users.Register;
+namespace Validators.Tests.Users.Update;
 
-public class RegisterUserValidatorTest
+public class UpdateUserValidatorTest
 {
     [Fact]
     public void Success()
     {
-        var validator = new RegisterUserValidator();
-        var request = RequestRegisterUserJsonBuilder.Build();
+        var validator = new UpdateUserValidator();
+        var request = RequestUpdateUserJsonBuilder.Build();
 
         var result = validator.Validate(request);
 
@@ -22,8 +22,8 @@ public class RegisterUserValidatorTest
     [ClassData(typeof(EmptyStringInLineDataTest))]
     public void Error_Empty_Name(string name)
     {
-        var validator = new RegisterUserValidator();
-        var request = RequestRegisterUserJsonBuilder.Build();
+        var validator = new UpdateUserValidator();
+        var request = RequestUpdateUserJsonBuilder.Build();
         request.Name = name;
 
         var result = validator.Validate(request);
@@ -37,8 +37,8 @@ public class RegisterUserValidatorTest
     [ClassData(typeof(EmptyStringInLineDataTest))]
     public void Error_Empty_Email(string email)
     {
-        var validator = new RegisterUserValidator();
-        var request = RequestRegisterUserJsonBuilder.Build();
+        var validator = new UpdateUserValidator();
+        var request = RequestUpdateUserJsonBuilder.Build();
         request.Email = email;
 
         var result = validator.Validate(request);
@@ -51,8 +51,8 @@ public class RegisterUserValidatorTest
     [Fact]
     public void Error_Invalid_Email()
     {
-        var validator = new RegisterUserValidator();
-        var request = RequestRegisterUserJsonBuilder.Build();
+        var validator = new UpdateUserValidator();
+        var request = RequestUpdateUserJsonBuilder.Build();
         request.Email = "test123.com";
 
         var result = validator.Validate(request);
@@ -60,20 +60,5 @@ public class RegisterUserValidatorTest
         Assert.False(result.IsValid);
         Assert.Single(result.Errors);
         Assert.Contains(result.Errors, e => e.ErrorMessage.Equals(ResourceErrorMessages.EMAIL_INVALID));
-    }
-
-    [Theory]
-    [ClassData(typeof(EmptyStringInLineDataTest))]
-    public void Error_Empty_Password(string password)
-    {
-        var validator = new RegisterUserValidator();
-        var request = RequestRegisterUserJsonBuilder.Build();
-        request.Password = password;
-
-        var result = validator.Validate(request);
-
-        Assert.False(result.IsValid);
-        Assert.Single(result.Errors);
-        Assert.Contains(result.Errors, e => e.ErrorMessage.Equals(ResourceErrorMessages.INVALID_PASSWORD));
     }
 }
