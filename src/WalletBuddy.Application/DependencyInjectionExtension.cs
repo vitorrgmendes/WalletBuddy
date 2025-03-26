@@ -10,6 +10,7 @@ using WalletBuddy.Application.Services.Expenses.GetById;
 using WalletBuddy.Application.Services.Expenses.Reports.Excel;
 using WalletBuddy.Application.Services.Expenses.Reports.Pdf;
 using WalletBuddy.Application.Services.Expenses.Update;
+using WalletBuddy.Application.Services.Users.ChangePassword;
 using WalletBuddy.Application.Services.Users.GetProfile;
 using WalletBuddy.Application.Services.Users.Register;
 using WalletBuddy.Application.Services.Users.Update;
@@ -41,6 +42,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IRegisterUser, RegisterUser>();
         services.AddScoped<IGetUserProfile, GetUserProfile>();
         services.AddScoped<IUpdateUser, UpdateUser>();
+        services.AddScoped<IChangePassword, ChangePassword>();
     }
 
     private static void AddAuthServices(IServiceCollection services)

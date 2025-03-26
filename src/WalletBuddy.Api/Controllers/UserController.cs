@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WalletBuddy.Application.Services.Users.ChangePassword;
 using WalletBuddy.Application.Services.Users.GetProfile;
 using WalletBuddy.Application.Services.Users.Register;
 using WalletBuddy.Application.Services.Users.Update;
@@ -43,7 +44,18 @@ public class UserController : ControllerBase
         [FromBody] RequestUpdateUserJson request)
     {
         await service.Execute(request);
+        return NoContent();
+    }
 
+    [HttpPut("Change-Password")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ChangePassword(
+        [FromServices] IChangePassword service,
+        [FromBody] RequestChangePasswordJson request)
+    {
+        await service.Execute(request);
         return NoContent();
     }
 }
