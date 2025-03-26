@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WalletBuddy.Domain\WalletBuddy.Domain.csproj" />
+    <ProjectReference Include="..\WalletBuddy.Exception\WalletBuddy.Exception.csproj" />
   </ItemGroup>
 
 </Project>

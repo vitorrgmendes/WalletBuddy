@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Authentication;
 using System.Security.Claims;
 using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Domain.Services.LoggedUser;
+using WalletBuddy.Exception.Exception;
 using WalletBuddy.Infrastructure.Database;
 
 namespace WalletBuddy.Infrastructure.Services.LoggedUser;
@@ -49,6 +51,8 @@ public class LoggedUser : ILoggedUser
         if (asNoTracking)
             query.AsNoTracking();
 
-        return await query.FirstAsync(user => user.UserIdentifier == Guid.Parse(userIdentifier));
+        var user = await query.FirstOrDefaultAsync(user => user.UserIdentifier == Guid.Parse(userIdentifier));
+
+        return user is null ? throw new InvalidCredentialsException() : user;
     }
 }

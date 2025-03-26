@@ -25,6 +25,11 @@ internal class UserRepository : IUserRepository
         return await _dbContext.Users.FirstAsync(user => user.Id == id);
     }
 
+    public async Task<User?> GetUserByIdWithoutFilters(long id)
+    {
+        return await _dbContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(user => user.Id == id);
+    }
+
     public async Task Register(User user)
     {
         await _dbContext.Users.AddAsync(user);

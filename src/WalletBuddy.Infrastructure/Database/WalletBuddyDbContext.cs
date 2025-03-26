@@ -21,6 +21,15 @@ public class WalletBuddyDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Global filter: remove registers with the column Deleted_At != null
+        modelBuilder.Entity<User>().HasQueryFilter(user => user.Deleted_At == null);
+    }
+
+    #region: Audit
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var modifiedEntities = ChangeTracker.Entries()
@@ -131,5 +140,5 @@ public class WalletBuddyDbContext : DbContext
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         });
     }
-
+#endregion
 }

@@ -162,4 +162,7 @@
   <data name="PASSWORD_DIFFERENT_CURRENT_PASSWORD" xml:space="preserve">
     <value>A senha é diferente da senha atual.</value>
   </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>Utilisateur non trouvé.</value>
+  </data>
 </root>
