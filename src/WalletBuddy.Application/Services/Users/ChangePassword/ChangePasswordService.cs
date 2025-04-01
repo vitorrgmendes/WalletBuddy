@@ -10,14 +10,14 @@ using WalletBuddy.Exception.Exception;
 
 namespace WalletBuddy.Application.Services.Users.ChangePassword;
 
-public class ChangePassword : IChangePassword
+public class ChangePasswordService : IChangePassword
 {
     private readonly ILoggedUser _loggedUser;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private IPasswordEncrypter _passwordEncrypter;
 
-    public ChangePassword(
+    public ChangePasswordService(
         ILoggedUser loggedUser,
         IPasswordEncrypter passwordEncrypter,
         IUserRepository userRepository,

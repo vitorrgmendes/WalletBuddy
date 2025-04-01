@@ -44,7 +44,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IRegisterUser, RegisterUser>();
         services.AddScoped<IGetUserProfile, GetUserProfile>();
         services.AddScoped<IUpdateUser, UpdateUser>();
-        services.AddScoped<IChangePassword, ChangePassword>();
+        services.AddScoped<IChangePassword, ChangePasswordService>();
         services.AddScoped<ISoftDeleteUser, SoftDeleteUser>();
         services.AddScoped<IRestoreUser, RestoreUser>();
     }

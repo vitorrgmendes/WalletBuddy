@@ -75,6 +75,7 @@ public class UserController : ControllerBase
     [HttpPut("Restore/{id}")]
     [ApiKey]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RestoreUser(
         [FromServices] IRestoreUser service,
         [FromRoute] long id)
