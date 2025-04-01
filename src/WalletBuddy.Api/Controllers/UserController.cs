@@ -62,7 +62,7 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("Soft-Delete")]
+    [HttpDelete("Soft-Delete")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> SoftDelete(
@@ -72,7 +72,7 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("Restore-User/{id}")]
+    [HttpPut("Restore/{id}")]
     [ApiKey]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> RestoreUser(
