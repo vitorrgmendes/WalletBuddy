@@ -25,6 +25,8 @@ public class WalletBuddyDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Tag>().ToTable("tags");
+
         // Global filter: remove registers with the column Deleted_At != null
         modelBuilder.Entity<User>().HasQueryFilter(user => user.Deleted_At == null);
     }

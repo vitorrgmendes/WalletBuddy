@@ -30,6 +30,8 @@ public class Expense
     [Column("updated_at")]
     public DateTime UpdatedAt { get; set; }
 
+    public ICollection<Tag> Tags { get; set; } = [];
+
     [Column("user_id")]
     public long UserId { get; set; }
     public User User { get; set; } = default!;
