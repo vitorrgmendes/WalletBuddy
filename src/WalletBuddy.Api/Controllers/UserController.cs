@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WalletBuddy.Api.Filters.CustomAttributes;
 using WalletBuddy.Application.Services.Users.ChangePassword;
 using WalletBuddy.Application.Services.Users.GetProfile;
+using WalletBuddy.Application.Services.Users.HardDelete;
 using WalletBuddy.Application.Services.Users.Register;
 using WalletBuddy.Application.Services.Users.Restore;
 using WalletBuddy.Application.Services.Users.SoftDelete;
@@ -59,6 +60,16 @@ public class UserController : ControllerBase
         [FromBody] RequestChangePasswordJson request)
     {
         await service.Execute(request);
+        return NoContent();
+    }
+
+    [HttpDelete("Delete")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> HardDelete(
+        [FromServices] IHardDeleteUser service)
+    {
+        await service.Execute();
         return NoContent();
     }
 

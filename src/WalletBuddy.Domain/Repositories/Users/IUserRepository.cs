@@ -10,4 +10,5 @@ public interface IUserRepository
     Task<bool> ExistActiveUserWithEmail(string email);
     Task Register(User user);
     void Update(User user);
+    void Delete(User user);
 }

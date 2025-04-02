@@ -10,6 +10,11 @@ internal class UserRepository : IUserRepository
 
     public UserRepository(WalletBuddyDbContext dbContext) => _dbContext = dbContext;
 
+    public void Delete(User user)
+    {
+        _dbContext.Users.Remove(user);
+    }
+
     public async Task<bool> ExistActiveUserWithEmail(string email)
     {
         return await _dbContext.Users.AnyAsync(user => user.Email.Equals(email));

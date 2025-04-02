@@ -12,6 +12,7 @@ using WalletBuddy.Application.Services.Expenses.Reports.Pdf;
 using WalletBuddy.Application.Services.Expenses.Update;
 using WalletBuddy.Application.Services.Users.ChangePassword;
 using WalletBuddy.Application.Services.Users.GetProfile;
+using WalletBuddy.Application.Services.Users.HardDelete;
 using WalletBuddy.Application.Services.Users.Register;
 using WalletBuddy.Application.Services.Users.Restore;
 using WalletBuddy.Application.Services.Users.SoftDelete;
@@ -45,6 +46,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IGetUserProfile, GetUserProfile>();
         services.AddScoped<IUpdateUser, UpdateUser>();
         services.AddScoped<IChangePassword, ChangePasswordService>();
+        services.AddScoped<IHardDeleteUser, HardDeleteUser>();
         services.AddScoped<ISoftDeleteUser, SoftDeleteUser>();
         services.AddScoped<IRestoreUser, RestoreUser>();
     }
