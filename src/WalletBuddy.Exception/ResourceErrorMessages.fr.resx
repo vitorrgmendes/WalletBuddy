@@ -165,4 +165,7 @@
   <data name="USER_NOT_FOUND" xml:space="preserve">
     <value>Utilisateur non trouvé.</value>
   </data>
+  <data name="TAG_TYPE_NOT_SUPPORTED" xml:space="preserve">
+    <value>Type d'étiquette non pris en charge.</value>
+  </data>
 </root>

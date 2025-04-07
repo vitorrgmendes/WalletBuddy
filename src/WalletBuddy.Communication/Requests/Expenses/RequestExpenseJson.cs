@@ -9,4 +9,5 @@ public class RequestExpenseJson
     public DateTime Date { get; set; }
     public decimal Price { get; set; }
     public PaymentType PaymentType { get; set; }
+    public IList<TagEnum> Tags { get; set; } = [];
 }

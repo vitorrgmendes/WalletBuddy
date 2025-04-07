@@ -36,6 +36,7 @@ internal class ExpensesRepository : IExpensesRepository
     public async Task<Expense?> GetById(User user, long id)
     {
         return await _dbContext.Expenses
+            .Include(expense => expense.Tags)
             .AsNoTracking()
             .FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
@@ -43,6 +44,7 @@ internal class ExpensesRepository : IExpensesRepository
     public async Task<Expense?> GetByIdForChanges(User user, long id)
     {
         return await _dbContext.Expenses
+            .Include(expense => expense.Tags)
             .FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
 

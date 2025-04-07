@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WalletBuddy.Communication.Enums;
 using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Domain.Entities;
 using WalletBuddy.Domain.Repositories;
@@ -42,8 +43,9 @@ public class UpdateExpense : IUpdateExpense
         _mapper.Map(request, expense);
         expense.UpdatedAt = DateTime.UtcNow;
 
-        _repository.Update(expense);
+        SyncTags(expense, request.Tags);
 
+        _repository.Update(expense);
         await _unitOfWork.Commit();
     }
 
@@ -59,5 +61,31 @@ public class UpdateExpense : IUpdateExpense
 
             throw new ErrorOnValidationException(errorMessages);
         }
+    }
+
+    private void SyncTags(Expense expense, IEnumerable<TagEnum> tags)
+    {
+        var requestTags = tags.Distinct().ToList();
+
+        // Tags To Delete
+        var tagsToDelete = expense.Tags
+            .Where(tag => !requestTags.Contains((TagEnum)tag.Value))
+            .ToList();
+
+        foreach (var tag in tagsToDelete)
+            expense.Tags.Remove(tag);
+
+        // Tags To Add
+        var currentTags = expense.Tags.Select(t => t.Value).ToHashSet();
+        var tagsToAdd = requestTags
+            .Where(tagValue => !currentTags.Contains((Domain.Enums.TagEnum)tagValue))
+            .Select(tagValue => new Tag
+            {
+                Value = (Domain.Enums.TagEnum)tagValue,
+                ExpenseId = expense.Id
+            });
+
+        foreach (var tag in tagsToAdd)
+            expense.Tags.Add(tag);
     }
 }

@@ -165,4 +165,7 @@
   <data name="USER_NOT_FOUND" xml:space="preserve">
     <value>User not found.</value>
   </data>
+  <data name="TAG_TYPE_NOT_SUPPORTED" xml:space="preserve">
+    <value>Tag type not supported.</value>
+  </data>
 </root>
