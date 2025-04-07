@@ -29,6 +29,10 @@ public class GetExpenseByIdServiceTest
         Assert.Equal(expense.Date, result.Date);
         Assert.Equal(expense.Price, result.Price);
         Assert.Equal((PaymentType)expense.PaymentType, result.PaymentType);
+        
+        Assert.NotNull(result.Tags);
+        Assert.NotEmpty(result.Tags);
+        Assert.Equivalent(expense.Tags.Select(tag => (TagEnum)tag.Value), result.Tags);
     }
 
     [Fact]

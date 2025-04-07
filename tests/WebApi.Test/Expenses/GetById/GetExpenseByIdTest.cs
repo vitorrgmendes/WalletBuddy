@@ -35,8 +35,10 @@ public class GetExpenseByIdTest : WalletBuddyClassFixture
         Assert.False(string.IsNullOrWhiteSpace(response.RootElement.GetProperty("title").GetString()));
         Assert.False(string.IsNullOrWhiteSpace(response.RootElement.GetProperty("description").GetString()));
         Assert.True(response.RootElement.GetProperty("date").GetDateTime() <= DateTime.Today);
-        Assert.True(response.RootElement.GetProperty("price").GetDecimal() > 0);
+        Assert.True(response.RootElement.GetProperty("price").GetDecimal() > 0);        
         Assert.True(Enum.IsDefined(typeof(PaymentType), response.RootElement.GetProperty("paymentType").GetInt32()));
+        
+        Assert.NotEmpty(response.RootElement.GetProperty("tags").EnumerateArray());
     }
 
     [Theory]
