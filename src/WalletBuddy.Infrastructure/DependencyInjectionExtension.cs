@@ -47,7 +47,7 @@ public static class DependencyInjectionExtension
             [ConsoleThemeStyle.LevelWarning] = new SystemConsoleThemeStyle { Foreground = ConsoleColor.Yellow },
             [ConsoleThemeStyle.LevelError] = new SystemConsoleThemeStyle { Foreground = ConsoleColor.Red },
             [ConsoleThemeStyle.LevelFatal] = new SystemConsoleThemeStyle { Foreground = ConsoleColor.DarkRed },
-        });        
+        });
 
         var outputTemplate = "[{Timestamp:yyyy-MM-dd HH:mm:ss zzz}] [{Level}] {Message:lj}{NewLine}{Exception}";
 
@@ -71,10 +71,10 @@ public static class DependencyInjectionExtension
                 CreateLogGroup = true
             };
             loggerConfig.WriteTo.AmazonCloudWatch(cloudWatchOptions, new Amazon.CloudWatchLogs.AmazonCloudWatchLogsClient());
-        }            
+        }
 
         Log.Logger = loggerConfig.CreateLogger();
-       
+        
         services.AddLogging(builder =>
         {
             builder.ClearProviders();

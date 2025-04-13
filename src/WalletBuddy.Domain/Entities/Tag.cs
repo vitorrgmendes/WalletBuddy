@@ -1,8 +1,9 @@
-﻿using WalletBuddy.Domain.Enums;
+﻿using WalletBuddy.Domain.Audit;
+using WalletBuddy.Domain.Enums;
 
 namespace WalletBuddy.Domain.Entities;
 
-public class Tag
+public class Tag : IAuditableEntity
 {
     public long Id { get; set; }
     public TagEnum Value { get; set; }

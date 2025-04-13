@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using WalletBuddy.Domain.Audit;
 using WalletBuddy.Domain.Enums;
 
 namespace WalletBuddy.Domain.Entities;
 
 [Table("users")]
-public class User
+public class User : IAuditableEntity
 {
     public long Id { get; set; }
     public string Name { get; set; } = string.Empty;
