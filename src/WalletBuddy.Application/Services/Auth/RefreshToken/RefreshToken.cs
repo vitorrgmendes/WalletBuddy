@@ -4,6 +4,7 @@ using WalletBuddy.Communication.Responses.Users;
 using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Users;
 using WalletBuddy.Domain.Security.Tokens;
+using WalletBuddy.Domain.Services.LoggedUser;
 using WalletBuddy.Exception.Exception;
 
 namespace WalletBuddy.Application.Services.Auth.RefreshToken;
@@ -13,39 +14,36 @@ public class RefreshToken : IRefreshToken
     private readonly IUserRepository _userRepository;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ILoggedUser _loggedUser;
 
     public RefreshToken(
         IUserRepository userRepository,
         IAccessTokenGenerator accessTokenGenerator,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        ILoggedUser loggedUser)
     {
         _userRepository = userRepository;
         _accessTokenGenerator = accessTokenGenerator;
         _unitOfWork = unitOfWork;
+        _loggedUser = loggedUser;
     }
 
-    public async Task<ResponseUserRegisteredJson> Execute(RequestRefreshTokenJson request)
+    public async Task<ResponseUserLoggedJson> Execute(RequestRefreshTokenJson request)
     {
-        var principal = _accessTokenGenerator.GetTokenPrincipal(request.AccessToken);
-        var userIdentifier = principal?.FindFirst(ClaimTypes.Sid)?.Value;
+        var user = await _loggedUser.GetForChanges();
 
-        if (userIdentifier is null)
-            throw new InvalidCredentialsException();
-
-        var user = await _userRepository.GetUserByUserIdentifier(Guid.Parse(userIdentifier));
         if (user is null || 
             user.RefreshToken != request.RefreshToken || 
-            user.RefreshTokenExpiration < DateTime.UtcNow
-            ) 
-            throw new InvalidCredentialsException();        
+            user.RefreshTokenExpiration < DateTime.UtcNow)
+                throw new InvalidCredentialsException();        
 
         user.RefreshToken = _accessTokenGenerator.GenerateRefreshToken();
         user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
-        //user.LastLogin_At = DateTime.UtcNow;
+
         _userRepository.Update(user);
         await _unitOfWork.Commit();
 
-        var response = new ResponseUserRegisteredJson
+        var response = new ResponseUserLoggedJson
         {
             Name = user.Name,
             Token = _accessTokenGenerator.Generate(user),

@@ -27,7 +27,7 @@ public class LoginUser : ILoginUser
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ResponseUserRegisteredJson> Execute(RequestLoginJson request)
+    public async Task<ResponseUserLoggedJson> Execute(RequestLoginJson request)
     {
         var user = await _userRepository.GetUserByEmail(request.Email) ?? throw new InvalidLoginException();
 
@@ -36,7 +36,7 @@ public class LoginUser : ILoginUser
         if (!passwordMatch)
             throw new InvalidLoginException();
 
-        var response = new ResponseUserRegisteredJson
+        var response = new ResponseUserLoggedJson
         {
             Name = user.Name,
             Token = _accessTokenGenerator.Generate(user),

@@ -160,6 +160,15 @@ namespace WalletBuddy.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password is different from the current password..
+        /// </summary>
+        public static string PASSWORD_DIFFERENT_CURRENT_PASSWORD {
+            get {
+                return ResourceManager.GetString("PASSWORD_DIFFERENT_CURRENT_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment Type is not valid..
         /// </summary>
         public static string PAYMENT_TYPE_INVALID {
@@ -178,11 +187,29 @@ namespace WalletBuddy.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag type not supported..
+        /// </summary>
+        public static string TAG_TYPE_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("TAG_TYPE_NOT_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The title is required..
         /// </summary>
         public static string TITLE_REQUIRED {
             get {
                 return ResourceManager.GetString("TITLE_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not found..
+        /// </summary>
+        public static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
             }
         }
     }

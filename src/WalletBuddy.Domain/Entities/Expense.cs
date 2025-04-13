@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using WalletBuddy.Domain.Audit;
 using WalletBuddy.Domain.Enums;
 
 namespace WalletBuddy.Domain.Entities;
 
 [Table("expenses")]
-public class Expense
+public class Expense : IAuditableEntity
 {
     [Column("id")]
     public long Id { get; set; }
@@ -29,6 +30,8 @@ public class Expense
 
     [Column("updated_at")]
     public DateTime UpdatedAt { get; set; }
+
+    public ICollection<Tag> Tags { get; set; } = [];
 
     [Column("user_id")]
     public long UserId { get; set; }

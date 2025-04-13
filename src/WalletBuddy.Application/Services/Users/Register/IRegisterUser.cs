@@ -5,5 +5,5 @@ namespace WalletBuddy.Application.Services.Users.Register;
 
 public interface IRegisterUser
 {
-    Task<ResponseUserRegisteredJson> Execute(RequestUserJson request);
+    Task<ResponseUserRegisteredJson> Execute(RequestRegisterUserJson request);
 }

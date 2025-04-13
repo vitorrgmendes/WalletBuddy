@@ -1,6 +1,6 @@
 ﻿using CommonUtilities.Test.InlineData;
 using CommonUtilities.Test.Requests;
-using WalletBuddy.Application.Services.Users;
+using WalletBuddy.Application.Services.Users.Register;
 using WalletBuddy.Exception;
 
 namespace Validators.Tests.Users.Register;

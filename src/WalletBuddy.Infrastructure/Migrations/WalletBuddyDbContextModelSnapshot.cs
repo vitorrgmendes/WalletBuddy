@@ -22,6 +22,51 @@ namespace WalletBuddy.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("WalletBuddy.Domain.Entities.AuditLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Changes")
+                        .HasColumnType("text")
+                        .HasColumnName("changes");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Entity")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("entity");
+
+                    b.Property<string>("EntityAfter")
+                        .HasColumnType("text")
+                        .HasColumnName("entityafter");
+
+                    b.Property<string>("EntityBefore")
+                        .HasColumnType("text")
+                        .HasColumnName("entitybefore");
+
+                    b.Property<string>("Operation")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("operation");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("userid");
+
+                    b.HasKey("Id")
+                        .HasName("pk_auditlogs");
+
+                    b.ToTable("auditlogs", (string)null);
+                });
+
             modelBuilder.Entity("WalletBuddy.Domain.Entities.Expense", b =>
                 {
                     b.Property<long>("Id")
@@ -71,6 +116,32 @@ namespace WalletBuddy.Infrastructure.Migrations
                         .HasDatabaseName("ix_expenses_user_id");
 
                     b.ToTable("expenses", (string)null);
+                });
+
+            modelBuilder.Entity("WalletBuddy.Domain.Entities.Tag", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ExpenseId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("expenseid");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("integer")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id")
+                        .HasName("pk_tags");
+
+                    b.HasIndex("ExpenseId")
+                        .HasDatabaseName("ix_tags_expenseid");
+
+                    b.ToTable("tags", (string)null);
                 });
 
             modelBuilder.Entity("WalletBuddy.Domain.Entities.User", b =>
@@ -146,6 +217,23 @@ namespace WalletBuddy.Infrastructure.Migrations
                         .HasConstraintName("fk_expenses_users_user_id");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WalletBuddy.Domain.Entities.Tag", b =>
+                {
+                    b.HasOne("WalletBuddy.Domain.Entities.Expense", "Expense")
+                        .WithMany("Tags")
+                        .HasForeignKey("ExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_tags_expenses_expenseid");
+
+                    b.Navigation("Expense");
+                });
+
+            modelBuilder.Entity("WalletBuddy.Domain.Entities.Expense", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

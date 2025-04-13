@@ -4,9 +4,9 @@ using WalletBuddy.Application.Services.Expenses;
 using WalletBuddy.Communication.Enums;
 using WalletBuddy.Exception;
 
-namespace Validators.Tests.Expenses.Create;
+namespace Validators.Tests.Expenses;
 
-public class CreateExpenseValidatorTests
+public class ExpenseValidatorTests
 {
     [Fact]
     public void Success()
@@ -76,5 +76,19 @@ public class CreateExpenseValidatorTests
         Assert.False(result.IsValid);
         Assert.Single(result.Errors);
         Assert.Contains(result.Errors, e => e.ErrorMessage.Equals(ResourceErrorMessages.PRICE_GREATER_THAN_ZERO));
+    }
+
+    [Fact]
+    public void Error_Invalid_Tag()
+    {
+        var validator = new ExpenseValidator();
+        var request = RequestExpenseJsonBuilder.Build();
+        request.Tags.Add((TagEnum)22);
+
+        var result = validator.Validate(request);
+
+        Assert.False(result.IsValid);
+        Assert.Single(result.Errors);
+        Assert.Contains(result.Errors, e => e.ErrorMessage.Equals(ResourceErrorMessages.TAG_TYPE_NOT_SUPPORTED));
     }
 }

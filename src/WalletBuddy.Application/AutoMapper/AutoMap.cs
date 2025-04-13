@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WalletBuddy.Communication.Enums;
 using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Communication.Requests.Users;
 using WalletBuddy.Communication.Responses.Expenses;
@@ -16,16 +17,21 @@ public class AutoMap : Profile
     }
 
     private void RequestToEntity()
-    {
-        CreateMap<RequestExpenseJson, Expense>();
-        CreateMap<RequestUserJson, User>()
+    {        
+        CreateMap<RequestRegisterUserJson, User>()
             .ForMember(entity => entity.Password, config => config.Ignore());
+
+        CreateMap<RequestExpenseJson, Expense>()
+            .ForMember(entity => entity.Tags, config => config.Ignore());
     }
 
     private void EntityToResponse()
     {
         CreateMap<Expense, ResponseExpenseCreatedJson>();
         CreateMap<Expense, ResponseShortExpenseJson>();
-        CreateMap<Expense, ResponseExpenseJson>();
+        CreateMap<Expense, ResponseExpenseJson>()
+            .ForMember(response => response.Tags, config => config.MapFrom(source => source.Tags.Select(tag => tag.Value)));
+
+        CreateMap<User, ResponseUserProfileJson>();
     }
 }

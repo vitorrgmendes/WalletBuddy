@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Sinks.AwsCloudWatch;
+using Serilog.Sinks.SystemConsole.Themes;
 using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Expenses;
 using WalletBuddy.Domain.Repositories.Users;
@@ -22,6 +26,8 @@ public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        AddLogging(services);
+
         AddSecurity(services);
         AddToken(services, configuration);
         AddApiKey(services, configuration);
@@ -29,6 +35,53 @@ public static class DependencyInjectionExtension
 
         if (!configuration.IsTestEnvironment())
             AddDbContext(services, configuration);
+    }
+
+    private static void AddLogging(IServiceCollection services)
+    {
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+        var customTheme = new SystemConsoleTheme(new Dictionary<ConsoleThemeStyle, SystemConsoleThemeStyle>
+        {
+            [ConsoleThemeStyle.LevelInformation] = new SystemConsoleThemeStyle { Foreground = ConsoleColor.Green },
+            [ConsoleThemeStyle.LevelWarning] = new SystemConsoleThemeStyle { Foreground = ConsoleColor.Yellow },
+            [ConsoleThemeStyle.LevelError] = new SystemConsoleThemeStyle { Foreground = ConsoleColor.Red },
+            [ConsoleThemeStyle.LevelFatal] = new SystemConsoleThemeStyle { Foreground = ConsoleColor.DarkRed },
+        });
+
+        var outputTemplate = "[{Timestamp:yyyy-MM-dd HH:mm:ss zzz}] [{Level}] {Message:lj}{NewLine}{Exception}";
+
+        // Serilog Default Configuration
+        var loggerConfig = new LoggerConfiguration()
+            .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+            .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
+            .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Warning)
+            .MinimumLevel.Information()
+            .Enrich.FromLogContext()
+            .WriteTo.Console(theme: customTheme, outputTemplate: outputTemplate);
+
+        // Add AWS CloudWatch Sink Configuration only for Production
+        if (environment is "Production")
+        {
+            var cloudWatchOptions = new CloudWatchSinkOptions
+            {
+                LogGroupName = "WalletBuddyLogs",
+                TextFormatter = new Serilog.Formatting.Compact.CompactJsonFormatter(),
+                MinimumLogEventLevel = Serilog.Events.LogEventLevel.Error,
+                CreateLogGroup = true
+            };
+            loggerConfig.WriteTo.AmazonCloudWatch(cloudWatchOptions, new Amazon.CloudWatchLogs.AmazonCloudWatchLogsClient());
+        }
+
+        Log.Logger = loggerConfig.CreateLogger();
+        
+        services.AddLogging(builder =>
+        {
+            builder.ClearProviders();
+            builder.AddSerilog(Log.Logger);
+        });
+
+        Log.Information("Application starting...");
     }
 
     private static void AddApiKey(IServiceCollection services, IConfiguration configuration)
@@ -60,9 +113,11 @@ public static class DependencyInjectionExtension
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
-    {        
+    {
         var connectionString = configuration.GetConnectionString("Connection");
-        services.AddDbContext<WalletBuddyDbContext>(config => config.UseNpgsql(connectionString)
-        .UseLowerCaseNamingConvention());
+
+        services.AddDbContext<WalletBuddyDbContext>(options =>
+        options.UseNpgsql(connectionString)
+               .UseLowerCaseNamingConvention());
     }
 }

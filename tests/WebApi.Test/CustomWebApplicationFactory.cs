@@ -47,11 +47,11 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         IAccessTokenGenerator tokenGenerator)
     {
         var userMember = AddMemberUser(dbContext, passwordEncrypter, tokenGenerator);
-        var expense = AddExpenses(dbContext, userMember, expenseId: 1);
+        var expense = AddExpenses(dbContext, userMember, expenseId: 1, tagId: 1);
         Expense_Member = new ExpenseIdentityManager(expense);
 
         var userAdmin = AddAdminUser(dbContext, passwordEncrypter, tokenGenerator);
-        expense = AddExpenses(dbContext, userAdmin, expenseId: 2);
+        expense = AddExpenses(dbContext, userAdmin, expenseId: 2, tagId: 2);
         Expense_Admin = new ExpenseIdentityManager(expense);
 
         dbContext.SaveChanges();
@@ -95,10 +95,16 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         return user;
     }
 
-    private Expense AddExpenses(WalletBuddyDbContext dbContext, User user, long expenseId)
+    private Expense AddExpenses(WalletBuddyDbContext dbContext, User user, long expenseId, long tagId)
     {
         var expense = ExpenseBuilder.Build(user);
         expense.Id = expenseId;
+
+        foreach (var tag in expense.Tags)
+        {
+            tag.Id = tagId;
+            tag.ExpenseId = expenseId;            
+        }            
 
         dbContext.Expenses.Add(expense);
 

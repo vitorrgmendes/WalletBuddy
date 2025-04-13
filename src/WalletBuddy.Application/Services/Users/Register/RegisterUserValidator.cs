@@ -2,9 +2,9 @@
 using WalletBuddy.Communication.Requests.Users;
 using WalletBuddy.Exception;
 
-namespace WalletBuddy.Application.Services.Users;
+namespace WalletBuddy.Application.Services.Users.Register;
 
-public class RegisterUserValidator : AbstractValidator<RequestUserJson>
+public class RegisterUserValidator : AbstractValidator<RequestRegisterUserJson>
 {
     public RegisterUserValidator()
     {
@@ -20,6 +20,6 @@ public class RegisterUserValidator : AbstractValidator<RequestUserJson>
             .WithMessage(ResourceErrorMessages.EMAIL_INVALID);
 
         RuleFor(user => user.Password)
-            .SetValidator(new PasswordValidator<RequestUserJson>());
+            .SetValidator(new PasswordValidator<RequestRegisterUserJson>());
     }
 }

@@ -1,8 +1,6 @@
-﻿using System.Security.Claims;
-using WalletBuddy.Domain.Repositories;
+﻿using WalletBuddy.Domain.Repositories;
 using WalletBuddy.Domain.Repositories.Users;
 using WalletBuddy.Domain.Services.LoggedUser;
-using WalletBuddy.Exception.Exception;
 
 namespace WalletBuddy.Application.Services.Auth.Logout;
 

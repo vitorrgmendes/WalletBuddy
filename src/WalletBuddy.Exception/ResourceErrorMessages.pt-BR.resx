@@ -159,4 +159,13 @@
   <data name="MISSING_API_KEY" xml:space="preserve">
     <value>A chave da API está ausente.</value>
   </data>
+  <data name="PASSWORD_DIFFERENT_CURRENT_PASSWORD" xml:space="preserve">
+    <value>A palavra-passe é diferente da palavra-passe atual.</value>
+  </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>Usuário não encontrado.</value>
+  </data>
+  <data name="TAG_TYPE_NOT_SUPPORTED" xml:space="preserve">
+    <value>Tipo de tag não suportado.</value>
+  </data>
 </root>

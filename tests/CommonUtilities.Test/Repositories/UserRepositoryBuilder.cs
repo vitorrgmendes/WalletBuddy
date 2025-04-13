@@ -13,6 +13,13 @@ public class UserRepositoryBuilder
         _repository = new Mock<IUserRepository>();
     }
 
+    public UserRepositoryBuilder GetUserById(User user)
+    {
+        _repository.Setup(userRepository => userRepository.GetUserById(user.Id)).ReturnsAsync(user);
+
+        return this;
+    }
+
     public void ExistActiveUserWithEmail(string email)
     {
         _repository.Setup(userRepository => userRepository.ExistActiveUserWithEmail(email)).ReturnsAsync(true);

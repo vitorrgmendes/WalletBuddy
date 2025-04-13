@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WalletBuddy.Communication.Enums;
 using WalletBuddy.Communication.Requests.Expenses;
 using WalletBuddy.Communication.Responses.Expenses;
 using WalletBuddy.Domain.Entities;
@@ -36,7 +37,9 @@ public class CreateExpense : ICreateExpense
         var expense = _mapper.Map<Expense>(request);
         expense.UserId = loggedUser.Id;
         expense.CreatedAt = DateTime.UtcNow;
-        expense.UpdatedAt = DateTime.UtcNow;
+        expense.UpdatedAt = expense.CreatedAt;
+
+        AddTags(expense, request.Tags);
 
         await _repository.Add(expense);
         await _unitOfWork.Commit();
@@ -56,5 +59,19 @@ public class CreateExpense : ICreateExpense
 
             throw new ErrorOnValidationException(errorMessages);
         }        
+    }
+
+    private void AddTags(Expense expense, IEnumerable<TagEnum> tags)
+    {
+        // Add tags
+        var requestTags = tags.Distinct().ToList();
+        foreach (var tag in requestTags)
+        {
+            expense.Tags.Add(new Tag
+            {
+                Value = (Domain.Enums.TagEnum)tag,
+                Expense = expense
+            });
+        }
     }
 }

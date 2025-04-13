@@ -159,4 +159,13 @@
   <data name="MISSING_API_KEY" xml:space="preserve">
     <value>La clé API est manquante.</value>
   </data>
+  <data name="PASSWORD_DIFFERENT_CURRENT_PASSWORD" xml:space="preserve">
+    <value>A senha é diferente da senha atual.</value>
+  </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>Utilisateur non trouvé.</value>
+  </data>
+  <data name="TAG_TYPE_NOT_SUPPORTED" xml:space="preserve">
+    <value>Type d'étiquette non pris en charge.</value>
+  </data>
 </root>

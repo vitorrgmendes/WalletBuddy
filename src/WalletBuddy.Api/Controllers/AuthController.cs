@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using WalletBuddy.Application.Services.Auth.Login;
 using WalletBuddy.Application.Services.Auth.Logout;
 using WalletBuddy.Application.Services.Auth.RefreshToken;
@@ -15,7 +14,7 @@ namespace WalletBuddy.Api.Controllers;
 public class AuthController : ControllerBase
 {
     [HttpPost("Login")]
-    [ProducesResponseType(typeof(ResponseUserRegisteredJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseUserLoggedJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Login(
@@ -28,7 +27,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("RefreshToken")]
-    [ProducesResponseType(typeof(ResponseUserRegisteredJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseUserLoggedJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RefreshToken(

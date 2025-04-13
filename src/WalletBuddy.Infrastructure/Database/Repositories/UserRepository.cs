@@ -10,6 +10,11 @@ internal class UserRepository : IUserRepository
 
     public UserRepository(WalletBuddyDbContext dbContext) => _dbContext = dbContext;
 
+    public void Delete(User user)
+    {
+        _dbContext.Users.Remove(user);
+    }
+
     public async Task<bool> ExistActiveUserWithEmail(string email)
     {
         return await _dbContext.Users.AnyAsync(user => user.Email.Equals(email));
@@ -20,9 +25,14 @@ internal class UserRepository : IUserRepository
         return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email));
     }
 
-    public async Task<User?> GetUserByUserIdentifier(Guid userIdentifier)
+    public async Task<User> GetUserById(long id)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(user => user.UserIdentifier.Equals(userIdentifier));
+        return await _dbContext.Users.FirstAsync(user => user.Id == id);
+    }
+
+    public async Task<User?> GetUserByIdWithoutFilters(long id)
+    {
+        return await _dbContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(user => user.Id == id);
     }
 
     public async Task Register(User user)
