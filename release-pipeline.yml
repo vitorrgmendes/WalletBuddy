@@ -1,0 +1,35 @@
+trigger:
+- main
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'c246a546-a724-4dc5-b6c6-739ccc98eb6f'
+  imageRepository: 'apiwalletbuddy'
+  containerRegistry: 'apiwalletbuddy.azurecr.io'
+  dockerfilePath: 'Dockerfile'
+  tag: '$(Build.BuildId)'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- task: DownloadSecureFile@1
+  name: appsettings
+  displayName: Download AppSettings.json
+  inputs:
+    secureFile: appsettings.Production.json
+
+- script: |
+    cp $(appsettings.secureFilePath) src/WalletBuddy.Api/appsettings.Production.json
+
+- task: Docker@2
+  displayName: Build and push an image to container registry
+  inputs:
+    command: buildAndPush
+    repository: $(imageRepository)
+    dockerfile: $(dockerfilePath)
+    containerRegistry: $(dockerRegistryServiceConnection)
+    tags: |
+      latest
+      $(tag)
