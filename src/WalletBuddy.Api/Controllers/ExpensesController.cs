@@ -26,7 +26,6 @@ public class ExpensesController : ControllerBase
         [FromBody] RequestExpenseJson request)
     {
         var response = await service.Execute(request);
-
         return Created(string.Empty, response);
     }
 
@@ -52,7 +51,6 @@ public class ExpensesController : ControllerBase
     public async Task<IActionResult> GetExpenseById([FromServices] IGetExpenseById service, [FromRoute] long id)
     {
         var response = await service.Execute(id);
-
         return Ok(response);
     }
 
