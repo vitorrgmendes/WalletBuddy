@@ -3,6 +3,8 @@ name: GitHub Build & Run Tests WalletBuddy API
 trigger:
 - staging
 
+pr: none
+
 pool:
   vmImage: ubuntu-latest
 
