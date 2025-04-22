@@ -22,7 +22,6 @@ public class AuthController : ControllerBase
         [FromBody] RequestLoginJson request)
     {
         var response = await service.Execute(request);
-
         return Ok(response);
     }
 
@@ -35,7 +34,6 @@ public class AuthController : ControllerBase
         [FromBody] RequestRefreshTokenJson request)
     {
         var response = await service.Execute(request);
-
         return Ok(response);
     }
 
