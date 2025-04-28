@@ -13,6 +13,9 @@ using WalletBuddy.Infrastructure.Extensions;
 using WalletBuddy.Domain.Security.Tokens;
 using WalletBuddy.Api.Token;
 using Serilog;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using WalletBuddy.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,7 +92,21 @@ builder.Services.AddAuthentication(config =>
     };
 });
 
+// Health Check service
+builder.Services.AddHealthChecks().AddDbContextCheck<WalletBuddyDbContext>();
+
 var app = builder.Build();
+
+// Health Check route
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    AllowCachingResponses = false,
+    ResultStatusCodes =
+    {
+        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+        [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable,
+    }
+});
 
 if (app.Environment.IsDevelopment())
 {
